@@ -1,6 +1,8 @@
 package br.com.iouone.entity;
 
+import br.com.iouone.dto.LoginRequest;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -93,5 +95,9 @@ public class Pessoa {
 
     public void setAtividadeFisica(AtividadeFisica atividadeFisica) {
         this.atividadeFisica = atividadeFisica;
+    }
+
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.senha(), this.senha);
     }
 }

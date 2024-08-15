@@ -4,6 +4,7 @@ import br.com.iouone.dto.PessoaRequest;
 import br.com.iouone.dto.PessoaResponse;
 import br.com.iouone.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<PessoaResponse> createPessoa(@RequestBody PessoaRequest pessoaRequest) {
         PessoaResponse novaPessoa = pessoaService.savePessoa(pessoaRequest);
-        return ResponseEntity.ok(novaPessoa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaPessoa);
     }
 
     @GetMapping("/{id}")
