@@ -8,6 +8,7 @@ import br.com.iouone.mapper.PessoaMapper;
 import br.com.iouone.repository.AtividadeRepository;
 import br.com.iouone.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +27,12 @@ public class PessoaService {
     @Autowired
     private PessoaMapper pessoaMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public PessoaResponse savePessoa(PessoaRequest pessoaRequest) {
         Pessoa pessoa = pessoaMapper.toEntity(pessoaRequest);
+        pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
         Pessoa savedPessoa = pessoaRepository.save(pessoa);
         return pessoaMapper.toResponse(savedPessoa);
     }
@@ -52,12 +57,16 @@ public class PessoaService {
             pessoa.setCelular(pessoaRequest.getCelular());
             pessoa.setDataNascimento(pessoaRequest.getDataNascimento());
 
-            // Atualizando a atividade física
             if (pessoaRequest.getAtividadeFisicaId() != null) {
                 AtividadeFisica atividadeFisica = atividadeFisicaRepository
                         .findById(pessoaRequest.getAtividadeFisicaId())
                         .orElse(null);
                 pessoa.setAtividadeFisica(atividadeFisica);
+            }
+
+
+            if (pessoaRequest.getSenha() != null && !pessoaRequest.getSenha().isEmpty()) {
+                pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
             }
 
             Pessoa updatedPessoa = pessoaRepository.save(pessoa);

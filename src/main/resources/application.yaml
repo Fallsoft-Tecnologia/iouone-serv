@@ -16,3 +16,8 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+jwt:
+  public:
+    key: classpath:public.pem
+  private:
+    key: classpath:private.pem
