@@ -11,6 +11,20 @@ public class PessoaResponse {
     private LocalDate dataNascimento;
     private String atividadeFisica;
 
+    public PessoaResponse() {
+    }
+
+    public PessoaResponse(Integer id, String cpf, String nome, String email, String celular, LocalDate dataNascimento, String atividadeFisica) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.celular = celular;
+        this.dataNascimento = dataNascimento;
+        this.atividadeFisica = atividadeFisica;
+    }
+
+
     // Getters e Setters
     public Integer getId() {
         return id;
