@@ -11,6 +11,9 @@ public class PessoaRequest {
     private LocalDate dataNascimento;
     private Integer atividadeFisicaId;
 
+    public PessoaRequest(String nome, String mail, String senha123, String number, String number1, LocalDate now, int i) {
+    }
+
     // Getters e Setters
     public String getCpf() {
         return cpf;
