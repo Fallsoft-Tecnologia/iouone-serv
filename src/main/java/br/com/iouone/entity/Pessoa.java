@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Table(name = "tb_pessoa")
 public class Pessoa {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,6 +26,8 @@ public class Pessoa {
     private String celular;
     @Column(name = "dt_nascimento")
     private LocalDate dataNascimento;
+    @Column(name = "customer_id")
+    private String customerId;
 
     @ManyToOne
     @JoinColumn(name = "fk_atividade_fisica")
@@ -99,5 +100,13 @@ public class Pessoa {
 
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.senha(), this.senha);
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

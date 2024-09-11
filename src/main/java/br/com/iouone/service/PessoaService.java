@@ -1,19 +1,28 @@
 package br.com.iouone.service;
 
+import br.com.iouone.config.RabbitConfig;
+import br.com.iouone.dto.PessoaDTO;
 import br.com.iouone.dto.PessoaRequest;
 import br.com.iouone.dto.PessoaResponse;
 import br.com.iouone.entity.AtividadeFisica;
 import br.com.iouone.entity.Pessoa;
 import br.com.iouone.mapper.PessoaMapper;
+import br.com.iouone.mapper.PessoaToDtoConverter;
 import br.com.iouone.repository.AtividadeRepository;
 import br.com.iouone.repository.PessoaRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class PessoaService {
@@ -30,12 +39,22 @@ public class PessoaService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final Logger logger = LoggerFactory.getLogger(PessoaService.class);
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     public PessoaResponse savePessoa(PessoaRequest pessoaRequest) {
         Pessoa pessoa = pessoaMapper.toEntity(pessoaRequest);
         pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
         Pessoa savedPessoa = pessoaRepository.save(pessoa);
+        PessoaDTO pessoaDTO = PessoaToDtoConverter.convert(savedPessoa);
+        logger.info("Enviando mensagem para a fila com PessoaId: {}", pessoaDTO.getId());
+        rabbitTemplate.convertAndSend(RabbitConfig.PESSOA_REGISTRATION_QUEUE, pessoaDTO);
         return pessoaMapper.toResponse(savedPessoa);
     }
+
+
 
     public Optional<PessoaResponse> findPessoaById(Integer id) {
         return pessoaRepository.findById(id)
@@ -64,12 +83,12 @@ public class PessoaService {
                 pessoa.setAtividadeFisica(atividadeFisica);
             }
 
-
             if (pessoaRequest.getSenha() != null && !pessoaRequest.getSenha().isEmpty()) {
                 pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
             }
 
             Pessoa updatedPessoa = pessoaRepository.save(pessoa);
+
             return pessoaMapper.toResponse(updatedPessoa);
         });
     }
@@ -79,5 +98,13 @@ public class PessoaService {
             pessoaRepository.delete(pessoa);
             return true;
         }).orElse(false);
+    }
+
+    public void updateCustomerId(Integer pessoaId, String customerId) {
+        Pessoa pessoa = pessoaRepository.findById(pessoaId)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + pessoaId));
+
+        pessoa.setCustomerId(customerId);
+        pessoaRepository.save(pessoa);
     }
 }
