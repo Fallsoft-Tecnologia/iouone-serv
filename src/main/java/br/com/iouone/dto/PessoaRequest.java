@@ -11,10 +11,16 @@ public class PessoaRequest {
     private LocalDate dataNascimento;
     private Integer atividadeFisicaId;
 
-    public PessoaRequest(String nome, String mail, String senha123, String number, String number1, LocalDate now, int i) {
+    public PessoaRequest(String cpf, String nome, String email, String senha, String celular, LocalDate dataNascimento, Integer atividadeFisicaId) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.celular = celular;
+        this.dataNascimento = dataNascimento;
+        this.atividadeFisicaId = atividadeFisicaId;
     }
 
-    // Getters e Setters
     public String getCpf() {
         return cpf;
     }

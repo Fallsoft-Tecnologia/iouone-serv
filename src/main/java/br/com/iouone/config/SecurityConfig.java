@@ -35,8 +35,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("api/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"api/pessoas").permitAll()
+                        .requestMatchers("/api/v2/pessoas/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/pessoas").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable()) //ATIVAR QUANDO SAIR DO AMBIENTE DE PRODUÇÃO
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

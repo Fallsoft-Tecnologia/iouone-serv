@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/pessoas")
+@RequestMapping("/api/v2/pessoas")
 public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
+
 
     @PostMapping
     public ResponseEntity<PessoaResponse> createPessoa(@RequestBody PessoaRequest pessoaRequest) {
