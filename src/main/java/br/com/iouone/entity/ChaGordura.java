@@ -8,7 +8,6 @@ public class ChaGordura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nome;
     private String descricao;
     private String modoDePreparo;
