@@ -5,30 +5,34 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "receita_cha_gordura")
 public class ReceitaChaGordura {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Float quantidade;
 
-    @Column(name = "id_ingredientes")
-    private Integer idIngredientes;
+    @ManyToOne
+    @JoinColumn(name = "id_ingredientes")
+    private Ingredientes ingredientes;
 
-    @Column(name = "id_cha_gordura")
-    private Integer idChaGordura;
+    @ManyToOne
+    @JoinColumn(name = "id_cha_gordura")
+    private ChaGordura chaGordura;
 
-    @Column(name = "id_unidade_de_medida")
-    private Integer idUnidadeDeMedida;
+    @ManyToOne
+    @JoinColumn(name = "id_unidade_de_medida")
+    private UnidadeDeMedida unidadeDeMedida;
 
     public ReceitaChaGordura() {
     }
 
-    public ReceitaChaGordura(Integer id, Float quantidade, Integer idIngredientes, Integer idChaGordura, Integer idUnidadeDeMedida) {
+    public ReceitaChaGordura(Integer id, Float quantidade, Ingredientes ingredientes, ChaGordura chaGordura, UnidadeDeMedida unidadeDeMedida) {
         this.id = id;
         this.quantidade = quantidade;
-        this.idIngredientes = idIngredientes;
-        this.idChaGordura = idChaGordura;
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+        this.ingredientes = ingredientes;
+        this.chaGordura = chaGordura;
+        this.unidadeDeMedida = unidadeDeMedida;
     }
 
     public Integer getId() {
@@ -47,27 +51,27 @@ public class ReceitaChaGordura {
         this.quantidade = quantidade;
     }
 
-    public Integer getIdIngredientes() {
-        return idIngredientes;
+    public Ingredientes getIngredientes() {
+        return ingredientes;
     }
 
-    public void setIdIngredientes(Integer idIngredientes) {
-        this.idIngredientes = idIngredientes;
+    public void setIngredientes(Ingredientes ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
-    public Integer getIdChaGordura() {
-        return idChaGordura;
+    public ChaGordura getChaGordura() {
+        return chaGordura;
     }
 
-    public void setIdChaGordura(Integer idChaGordura) {
-        this.idChaGordura = idChaGordura;
+    public void setChaGordura(ChaGordura chaGordura) {
+        this.chaGordura = chaGordura;
     }
 
-    public Integer getIdUnidadeDeMedida() {
-        return idUnidadeDeMedida;
+    public UnidadeDeMedida getUnidadeDeMedida() {
+        return unidadeDeMedida;
     }
 
-    public void setIdUnidadeDeMedida(Integer idUnidadeDeMedida) {
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+    public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
+        this.unidadeDeMedida = unidadeDeMedida;
     }
 }
