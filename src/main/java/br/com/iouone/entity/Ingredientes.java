@@ -12,14 +12,13 @@ public class Ingredientes {
 
     private String nome;
 
+
     public Ingredientes() {
     }
 
-    public Ingredientes(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
 
+
+    // Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -35,4 +34,6 @@ public class Ingredientes {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
 }

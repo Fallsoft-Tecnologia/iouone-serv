@@ -12,7 +12,7 @@ public class ChaGordura {
     private String descricao;
     private String modoDePreparo;
 
-    @Lob
+
     private byte[] foto;
 
     public ChaGordura() {
