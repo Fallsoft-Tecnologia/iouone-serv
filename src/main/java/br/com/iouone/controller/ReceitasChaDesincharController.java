@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v2/cha-desinchar")
+@RequestMapping("/api/v2/receita-cha-desinchar")
 public class ReceitasChaDesincharController {
 
     @Autowired

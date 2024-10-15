@@ -45,8 +45,8 @@ public class LoginController {
 
         var claims = JwtClaimsSet.builder()
                 .issuer("backend-iouone")
-                .subject(pessoa.get().getId().toString())
                 .subject(pessoa.get().getNome())
+                .claim("id", pessoa.get().getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
                 .build();
