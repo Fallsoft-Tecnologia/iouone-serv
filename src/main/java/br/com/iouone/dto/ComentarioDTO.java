@@ -1,19 +1,20 @@
 package br.com.iouone.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ComentarioDTO {
     private int id;
     private String mensagemComentario;
     private int fkMensagemInicial;
     private Integer fkComentarioPai;
-    private LocalDate dataEnvio;
+    private LocalDateTime dataEnvio;
     private String nomeCliente;
 
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(int id, String mensagemComentario, int fkMensagemInicial, Integer fkComentarioPai, LocalDate dataEnvio, String nomeCliente) {
+    public ComentarioDTO(int id, String mensagemComentario, int fkMensagemInicial, Integer fkComentarioPai, LocalDateTime dataEnvio, String nomeCliente) {
         this.id = id;
         this.mensagemComentario = mensagemComentario;
         this.fkMensagemInicial = fkMensagemInicial;
@@ -30,11 +31,11 @@ public class ComentarioDTO {
         this.nomeCliente = nomeCliente;
     }
 
-    public LocalDate getDataEnvio() {
+    public LocalDateTime getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(LocalDate dataEnvio) {
+    public void setDataEnvio(LocalDateTime dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 

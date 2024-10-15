@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class MensagensService {
 
     public Mensagens createMensagem(Mensagens novaMensagem) {
         if (novaMensagem.getDataEnvio() == null) {
-            novaMensagem.setDataEnvio(LocalDate.now());
+            novaMensagem.setDataEnvio(LocalDateTime.now());
         }
         return mensagensRepository.save(novaMensagem);
     }

@@ -36,14 +36,12 @@ public class IngredientesController {
         for (IngredienteDTO dto : ingredientesDTO) {
             Ingredientes ingrediente = new Ingredientes();
             ingrediente.setNome(dto.getNome());
-            ingrediente.setQuantidade(dto.getQuantidade());
 
             Integer unidadeMedidaId = null;
             if (dto.getUnidadeDeMedida() != null) {
                 unidadeMedidaId = Integer.parseInt(dto.getUnidadeDeMedida());
             }
-            ingrediente.setUnidadeMedidaId(unidadeMedidaId);
-            ingrediente.setMarmitaFitId(dto.getMarmitaFitId());
+
 
             ingredientes.add(service.create(ingrediente));
         }

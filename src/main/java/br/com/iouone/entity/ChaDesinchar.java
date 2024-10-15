@@ -17,7 +17,7 @@ public class ChaDesinchar {
     @Column(name = "modo_de_preparo")
     private String modoDePreparo;
 
-    @Lob
+
     private byte[] foto;
 
     public ChaDesinchar() {

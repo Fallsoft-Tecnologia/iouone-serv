@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ComentarioMensagem {
     private String mensagemComentario;
 
     @Column(name = "data_envio")
-    private LocalDate dataEnvio;
+    private LocalDateTime dataEnvio;
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
@@ -89,11 +90,11 @@ public class ComentarioMensagem {
         this.mensagemComentario = mensagemComentario;
     }
 
-    public LocalDate getDataEnvio() {
+    public LocalDateTime getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(LocalDate dataEnvio) {
+    public void setDataEnvio(LocalDateTime dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 

@@ -13,7 +13,7 @@ public class Detox {
     private String descricao;
     private String modoDePreparo;
 
-    @Lob
+
     private byte[] foto;
 
     public Detox() {

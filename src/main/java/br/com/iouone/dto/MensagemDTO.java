@@ -1,14 +1,15 @@
 package br.com.iouone.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MensagemDTO {
     private int id;
     private String mensagem;
-    private LocalDate dataEnvio;
+    private LocalDateTime dataEnvio;
     private String nomePessoa;
 
-    public MensagemDTO(int id, String mensagem, LocalDate dataEnvio, String nomePessoa) {
+    public MensagemDTO(int id, String mensagem, LocalDateTime dataEnvio, String nomePessoa) {
         this.id = id;
         this.mensagem = mensagem;
         this.dataEnvio = dataEnvio;
@@ -32,11 +33,11 @@ public class MensagemDTO {
         this.mensagem = mensagem;
     }
 
-    public LocalDate getDataEnvio() {
+    public LocalDateTime getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(LocalDate dataEnvio) {
+    public void setDataEnvio(LocalDateTime dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 

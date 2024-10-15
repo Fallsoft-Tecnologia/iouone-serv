@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,7 @@ public class ComentarioMensagemService {
             novoComentario.setFkMensagemInicial(mensagem);
             novoComentario.setMensagemComentario(mensagemComentario);
 
-            novoComentario.setDataEnvio(LocalDate.now());
+            novoComentario.setDataEnvio(LocalDateTime.now());
 
             Pessoa pessoa = mensagem.getPessoa();
             novoComentario.setPessoa(pessoa);

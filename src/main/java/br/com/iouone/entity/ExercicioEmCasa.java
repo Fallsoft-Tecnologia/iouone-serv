@@ -15,10 +15,10 @@ public class ExercicioEmCasa {
     @Column(name = "url_treino_casa")
     private String urlTreinoCasa;
 
-    @Lob
+
     private byte[] video;
 
-    @Lob
+
     private byte[] foto;
 
     public ExercicioEmCasa() {

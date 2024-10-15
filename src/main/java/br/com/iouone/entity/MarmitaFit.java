@@ -13,7 +13,7 @@ public class MarmitaFit {
     private String descricao;
     private String modoDePreparo;
 
-    @Lob
+
     private byte[] foto;
 
     public MarmitaFit() {
