@@ -1,8 +1,9 @@
 package br.com.iouone.controller;
 
-import br.com.iouone.dto.PessoaRequest;
-import br.com.iouone.dto.PessoaResponse;
+import br.com.iouone.config.SecurityConstants;
+import br.com.iouone.dto.*;
 import br.com.iouone.service.PessoaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/pessoas")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class PessoaController {
 
     @Autowired
@@ -52,4 +54,44 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping("cadastro/dados/login")
+    public ResponseEntity<PessoaResponse> cadastroLoginPessoa(@RequestBody LoginRequest loginRequest) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginRequest));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
+
+
+    @PostMapping("cadastro/dados/pessoais")
+    public ResponseEntity<PessoaResponse> cadastroDadosPessoais(@RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosPessoais(dadosPessoaisPessoaRequest));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("cadastro/dados/endereco")
+    public ResponseEntity<PessoaResponse> cadastroDadosEndereco(@RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosEndereco(dadosPessoaisEnderecoRequest));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("cadastro/dados/corporais")
+    public ResponseEntity<PessoaResponse> cadastroDadosCorporais(@RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosCorporais(dadosPessoaisCorporaisRequest));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

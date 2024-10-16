@@ -1,7 +1,9 @@
 package br.com.iouone.controller;
 
+import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.entity.ReceitasChaDesinchar;
 import br.com.iouone.service.ReceitasChaDesincharService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/receita-cha-desinchar")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class ReceitasChaDesincharController {
 
     @Autowired

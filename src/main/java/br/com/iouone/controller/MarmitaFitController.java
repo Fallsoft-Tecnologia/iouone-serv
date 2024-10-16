@@ -1,8 +1,10 @@
 package br.com.iouone.controller;
 
+import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.dto.MarmitaFitDTO;
 import br.com.iouone.entity.MarmitaFit;
 import br.com.iouone.service.MarmitaFitService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/marmitas-fit")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class MarmitaFitController {
 
     @Autowired

@@ -1,8 +1,10 @@
 package br.com.iouone.controller;
 
+import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.dto.ComentarioRequest;
 import br.com.iouone.service.ComentarioMensagemService;
 import br.com.iouone.service.MensagensService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v2/mensagens")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class ComentarioMensagemController {
 
     @Autowired

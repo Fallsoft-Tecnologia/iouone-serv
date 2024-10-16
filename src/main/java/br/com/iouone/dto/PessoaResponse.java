@@ -9,7 +9,15 @@ public class PessoaResponse {
     private String email;
     private String celular;
     private LocalDate dataNascimento;
+    private String cep;
+    private String endereco;
+    private String cidade;
+    private String estado;
+    private String pais;
+    private Float pesoIdeal;
     private String atividadeFisica;
+    private Float altura;
+    private Float pesoAtual;
 
     public PessoaResponse() {
     }
@@ -24,6 +32,23 @@ public class PessoaResponse {
         this.atividadeFisica = atividadeFisica;
     }
 
+    public PessoaResponse(Integer id, String cpf, String nome, String email, String celular, LocalDate dataNascimento, String cep, String endereco, String cidade, String estado, String pais, Float pesoIdeal, String atividadeFisica, Float altura, Float pesoAtual) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.celular = celular;
+        this.dataNascimento = dataNascimento;
+        this.cep = cep;
+        this.endereco = endereco;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pais = pais;
+        this.pesoIdeal = pesoIdeal;
+        this.atividadeFisica = atividadeFisica;
+        this.altura = altura;
+        this.pesoAtual = pesoAtual;
+    }
 
     // Getters e Setters
     public Integer getId() {
@@ -81,4 +106,36 @@ public class PessoaResponse {
     public void setAtividadeFisica(String atividadeFisica) {
         this.atividadeFisica = atividadeFisica;
     }
+
+    public String getCep() {return cep; }
+
+    public void setCep(String cep) {this.cep = cep; }
+
+    public String getEndereco() {return endereco; }
+
+    public void setEndereco(String endereco) {this.endereco = endereco; }
+
+    public String getCidade() {return cidade; }
+
+    public void setCidade(String cidade) {this.cidade = cidade; }
+
+    public String getEstado() {return estado; }
+
+    public void setEstado(String estado) {this.estado = estado; }
+
+    public String getPais() {return pais; }
+
+    public void setPais(String pais) {this.pais = pais; }
+
+    public Float getPesoIdeal() {return pesoIdeal; }
+
+    public void setPesoIdeal(Float pesoIdeal) {this.pesoIdeal = pesoIdeal; }
+
+    public Float getAltura() {return altura; }
+
+    public void setAltura(Float altura) {this.altura = altura; }
+
+    public Float getPesoAtual() {return pesoAtual; }
+
+    public void setPesoAtual(Float pesoAtual) {this.pesoAtual = pesoAtual; }
 }
