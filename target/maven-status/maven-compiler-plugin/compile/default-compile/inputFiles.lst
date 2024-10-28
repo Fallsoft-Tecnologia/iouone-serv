@@ -1,0 +1,16 @@
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\controller\PessoaController.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\dto\PessoaRequest.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\dto\PessoaResponse.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\entity\AtividadeFisica.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\entity\ComentarioMensagem.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\entity\DadosCorporais.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\entity\Mensagens.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\entity\Pessoa.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\IouoneApplication.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\mapper\PessoaMapper.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\repository\AtividadeRepository.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\repository\ComentatioMensagemRepository.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\repository\DadosCorporaisRepository.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\repository\MensagensRepository.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\repository\PessoaRepository.java
+C:\Users\heber\OneDrive\Área de Trabalho\Projetos\iouone-serv\src\main\java\br\com\iouone\service\PessoaService.java
