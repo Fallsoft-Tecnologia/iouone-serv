@@ -5,15 +5,6 @@ CREATE TABLE tb_atividade_fisica
     atividade_fisica varchar(50)
 );
 
--- TABELA PAISES --
-
-CREATE TABLE tb_paises
-(
-    id         INT AUTO_INCREMENT,
-    pais       VARCHAR(100),
-    abreviacao VARCHAR(20),
-    PRIMARY KEY (id)
-);
 -- TABELA ENDERECO --
 CREATE TABLE tb_endereco
 (
@@ -21,9 +12,9 @@ CREATE TABLE tb_endereco
     endereco varchar(255),
     cidade   varchar(255),
     estado   varchar(20),
-    fk_pais  int,
+    pais     varchar(10),
+    cep      varchar(20),
 
-    CONSTRAINT fk_pais_endereco_id FOREIGN KEY (fk_pais) REFERENCES tb_paises (id),
     PRIMARY KEY (id)
 
 );
@@ -32,9 +23,9 @@ CREATE TABLE tb_endereco
 CREATE TABLE tb_dados_corporais
 (
     id         int PRIMARY KEY auto_increment,
-    altura     int(3) NOT NULL,
-    peso_atual int(6) NOT NULL,
-    peso_ideal int(6) NOT NULL
+    altura     float NOT NULL,
+    peso_atual float NOT NULL,
+    peso_ideal float NOT NULL
 );
 
 
@@ -45,13 +36,14 @@ CREATE TABLE tb_pessoa
     cpf                 VARCHAR(11) UNIQUE,
     nome                VARCHAR(255),
     email               VARCHAR(255) UNIQUE,
-    senha               VARCHAR(32),
+    senha               TEXT,
     celular             VARCHAR(15),
     dt_nascimento       DATE,
     customer_id         VARCHAR(255),
+    fluxo_id            VARCHAR(255),
     fk_atividade_fisica int,
     fk_endereco         int,
-    fk_dados_corporais  int NOT NULL UNIQUE,
+    fk_dados_corporais  int,
 
     CONSTRAINT fk_atividadade_pessoa_id FOREIGN KEY (fk_atividade_fisica) REFERENCES tb_atividade_fisica (id),
     CONSTRAINT fk_endereco_pessoa_id FOREIGN KEY (fk_endereco) REFERENCES tb_endereco (id),
@@ -348,7 +340,5 @@ VALUES (3, 'test3');
 INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
 VALUES (4, 'test4');
 
-INSERT INTO `iouone`.`tb_paises`(`id`, `pais`, `abreviacao`)
-VALUES (1, 'Brasil', 'BR');
 
 
