@@ -37,12 +37,12 @@ public class PessoaMapper {
 
     public PessoaResponse toResponse(Pessoa pessoa) {
         PessoaResponse pessoaResponse = new PessoaResponse();
-        pessoaResponse.setId(pessoa.getId());
         pessoaResponse.setCpf(pessoa.getCpf());
         pessoaResponse.setNome(pessoa.getNome());
         pessoaResponse.setEmail(pessoa.getEmail());
         pessoaResponse.setCelular(pessoa.getCelular());
         pessoaResponse.setDataNascimento(pessoa.getDataNascimento());
+        pessoa.setFluxoId(pessoaResponse.getFluxoId());
 
         if (pessoa.getAtividadeFisica() != null) {
             pessoaResponse.setAtividadeFisica(pessoa.getAtividadeFisica().getAtividadeFisica());
@@ -52,10 +52,11 @@ public class PessoaMapper {
     }
 
 
-    public Pessoa convertLoginToPessoa(LoginRequest loginRequest) {
+    public Pessoa convertLoginToPessoa(LoginDTO loginDTO) {
         Pessoa pessoa = new Pessoa();
-        pessoa.setEmail(loginRequest.getEmail());
-        pessoa.setSenha(loginRequest.getPassword());
+        pessoa.setEmail(loginDTO.getEmail());
+        pessoa.setSenha(loginDTO.getPassword());
+        pessoa.setCpf(loginDTO.getCpf());
 
         return pessoa;
     }
@@ -63,8 +64,7 @@ public class PessoaMapper {
     public Pessoa convertDadosPessoaisToPessoa(Pessoa pessoa, DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest) {
         pessoa.setNome(dadosPessoaisPessoaRequest.getNome());
         pessoa.setDataNascimento(dadosPessoaisPessoaRequest.getDataNascimento());
-        pessoa.setCelular(dadosPessoaisPessoaRequest.getTelefone());
-        pessoa.setCpf(dadosPessoaisPessoaRequest.getCpf());
+        pessoa.setCelular(dadosPessoaisPessoaRequest.getCelular());
         return pessoa;
     }
 

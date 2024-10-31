@@ -2,32 +2,12 @@ package br.com.iouone.dto;
 
 public class DadosPessoaisEnderecoRequest {
 
-    private Integer idPessoa;
     private String cep;
     private String endereco;
     private String cidade;
     private String estado;
-    private PaisesRequest pais;
+    private String pais;
 
-    public DadosPessoaisEnderecoRequest() {
-    }
-
-    public DadosPessoaisEnderecoRequest(Integer idPessoa, String cep, String endereco, String cidade, String estado, PaisesRequest pais) {
-        this.idPessoa = idPessoa;
-        this.cep = cep;
-        this.endereco = endereco;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-    }
-
-    public Integer getIdPessoa() {
-        return idPessoa;
-    }
-
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
-    }
 
     public String getCep() {
         return cep;
@@ -61,11 +41,11 @@ public class DadosPessoaisEnderecoRequest {
         this.estado = estado;
     }
 
-    public PaisesRequest getPais() {
+    public String getPais() {
         return pais;
     }
 
-    public void setPais(PaisesRequest pais) {
+    public void setPais(String pais) {
         this.pais = pais;
     }
 }

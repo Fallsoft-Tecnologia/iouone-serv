@@ -21,4 +21,8 @@ public class AtividadeFisicaService {
     public List<AtividadeFisica> buscarAtividadeFisicas() {
         return atividadeRepository.findAll();
     }
+
+    public AtividadeFisica buscarAtividadeFisicaPorNome(String nome) {
+        return atividadeRepository.findAtividadeFisicaByAtividadeFisica(nome);
+    }
 }

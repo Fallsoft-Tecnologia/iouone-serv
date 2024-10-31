@@ -15,19 +15,21 @@ public class Endereco {
     private String cidade;
     @Column(name = "estado")
     private String estado;
-    @ManyToOne
-    @JoinColumn(name = "fk_pais")
-    private Paises paises;
+    @Column(name= "pais")
+    private String paises;
+    @Column(name= "cep")
+    private String cep;
 
     public Endereco() {
     }
 
-    public Endereco(Integer id, String endereco, String cidade, String estado, Paises paises) {
+    public Endereco(Integer id, String endereco, String cidade, String estado, String paises, String cep) {
         this.id = id;
         this.endereco = endereco;
         this.cidade = cidade;
         this.estado = estado;
         this.paises = paises;
+        this.cep = cep;
     }
 
     public Integer getId() {
@@ -62,11 +64,19 @@ public class Endereco {
         this.estado = estado;
     }
 
-    public Paises getPaises() {
+    public String getPaises() {
         return paises;
     }
 
-    public void setPaises(Paises paises) {
+    public void setPaises(String paises) {
         this.paises = paises;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }

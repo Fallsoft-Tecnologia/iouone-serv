@@ -2,20 +2,11 @@ package br.com.iouone.dto;
 
 public class DadosPessoaisCorporaisRequest {
 
-    private Integer idPessoa;
     private Float pesoIdeal;
     private Float altura;
     private Float pesoAtual;
-    private AtividadeFisicaRequest atividadeFisicaRequest;
+    private String atividadeFisica;
 
-
-    public Integer getIdPessoa() {
-        return idPessoa;
-    }
-
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
-    }
 
     public Float getPesoIdeal() {
         return pesoIdeal;
@@ -25,14 +16,13 @@ public class DadosPessoaisCorporaisRequest {
         this.pesoIdeal = pesoIdeal;
     }
 
-    public AtividadeFisicaRequest getAtividadeFisicaRequest() {
-        return atividadeFisicaRequest;
+    public String getAtividadeFisica() {
+        return atividadeFisica;
     }
 
-    public void setAtividadeFisicaRequest(AtividadeFisicaRequest atividadeFisicaRequest) {
-        this.atividadeFisicaRequest = atividadeFisicaRequest;
+    public void setAtividadeFisica(String atividadeFisica) {
+        this.atividadeFisica = atividadeFisica;
     }
-
 
     public Float getAltura() {
         return altura;

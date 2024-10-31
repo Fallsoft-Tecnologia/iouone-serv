@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,8 +41,6 @@ public class PessoaService {
     @Autowired
     private EnderecoService enderecoService;
 
-    @Autowired
-    private PaisesService paisesService;
 
     @Autowired
     private EnderecoMapper enderecoMapper;
@@ -114,44 +113,51 @@ public class PessoaService {
         pessoaRepository.save(pessoa);
     }
 
-    public PessoaResponse cadastroDadosLogin(LoginRequest loginRequest) {
-        Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginRequest);
-        pessoa.setSenha(passwordEncoder.encode(loginRequest.getPassword()));
+    public String cadastroDadosLogin(LoginDTO loginDTO) {
+        Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
+        pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
+        pessoa.setFluxoId(UUID.randomUUID().toString());
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return pessoaMapper.toResponse(savePessoa);
+        return savePessoa.getFluxoId();
     }
 
-    public PessoaResponse cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest) {
-        Pessoa getPessoa = findByIdPessoa(dadosPessoaisPessoaRequest.getIdPessoa());
-        Pessoa pessoa = pessoaMapper.convertDadosPessoaisToPessoa(getPessoa,dadosPessoaisPessoaRequest);
+    public String cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        Pessoa pessoa = pessoaMapper.convertDadosPessoaisToPessoa(getPessoa, dadosPessoaisPessoaRequest);
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return pessoaMapper.toResponse(savePessoa);
+        return savePessoa.getFluxoId();
     }
 
-    public PessoaResponse cadastroDadosEndereco(DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest) {
-        Pessoa getPessoa = findByIdPessoa(dadosPessoaisEnderecoRequest.getIdPessoa());
-        Paises pais = paisesService.getPaisByAbreviacao(dadosPessoaisEnderecoRequest.getPais().abreviacao());
-        Endereco convertEndereco = enderecoMapper.convertEnderecoResponsetoEndereco(dadosPessoaisEnderecoRequest, pais);
+    public String cadastroDadosEndereco(DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        Endereco convertEndereco = enderecoMapper.convertEnderecoResponsetoEndereco(dadosPessoaisEnderecoRequest);
         Endereco saveEndereco = enderecoService.saveEndereco(convertEndereco);
         Pessoa pessoa = pessoaMapper.convertDadosEnderecoToPessoa(getPessoa, saveEndereco);
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return pessoaMapper.toResponse(savePessoa);
+        return savePessoa.getFluxoId();
 
     }
 
-    public PessoaResponse cadastroDadosCorporais(DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest) {
-        Pessoa getPessoa = findByIdPessoa(dadosPessoaisCorporaisRequest.getIdPessoa());
-
-        AtividadeFisica atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorId(dadosPessoaisCorporaisRequest.getAtividadeFisicaRequest().id());
+    public String cadastroDadosCorporais(DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        AtividadeFisica atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorNome(dadosPessoaisCorporaisRequest.getAtividadeFisica());
         DadosCorporais convertDadosCorporais = dadosCorporaisMapper.convertDadosCorporaisRequesttoDadosCorporais(dadosPessoaisCorporaisRequest);
         DadosCorporais saveDadosCorporais = dadosCorporaisService.saveDadosCorporais(convertDadosCorporais);
         Pessoa savePessoa = pessoaMapper.convertDadosCorporaisToPessoa(getPessoa, saveDadosCorporais, atividadeFisica);
-        return pessoaMapper.toResponse(savePessoa);
+        return savePessoa.getFluxoId();
     }
 
     private Pessoa findByIdPessoa(Integer id) {
         return pessoaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + id));
+    }
+
+    private Pessoa findPessoaByFluxoId(String fluxoId) {
+        Pessoa pessoa = pessoaRepository.findByFluxoId(fluxoId);
+        if (pessoa == null) {
+            throw new RuntimeException("Pessoa não encontrada");
+        }
+        return pessoa;
     }
 
 }

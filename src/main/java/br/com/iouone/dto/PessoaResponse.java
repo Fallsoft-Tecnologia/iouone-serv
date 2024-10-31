@@ -3,7 +3,6 @@ package br.com.iouone.dto;
 import java.time.LocalDate;
 
 public class PessoaResponse {
-    private Integer id;
     private String cpf;
     private String nome;
     private String email;
@@ -18,12 +17,13 @@ public class PessoaResponse {
     private String atividadeFisica;
     private Float altura;
     private Float pesoAtual;
+    private String fluxoId;
 
     public PessoaResponse() {
     }
 
-    public PessoaResponse(Integer id, String cpf, String nome, String email, String celular, LocalDate dataNascimento, String atividadeFisica) {
-        this.id = id;
+    public PessoaResponse( String cpf, String nome, String email, String celular, LocalDate dataNascimento, String atividadeFisica) {
+
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
@@ -32,8 +32,8 @@ public class PessoaResponse {
         this.atividadeFisica = atividadeFisica;
     }
 
-    public PessoaResponse(Integer id, String cpf, String nome, String email, String celular, LocalDate dataNascimento, String cep, String endereco, String cidade, String estado, String pais, Float pesoIdeal, String atividadeFisica, Float altura, Float pesoAtual) {
-        this.id = id;
+    public PessoaResponse( String cpf, String nome, String email, String celular, LocalDate dataNascimento, String cep, String endereco, String cidade, String estado, String pais, Float pesoIdeal, String atividadeFisica, Float altura, Float pesoAtual) {
+
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
@@ -51,12 +51,14 @@ public class PessoaResponse {
     }
 
     // Getters e Setters
-    public Integer getId() {
-        return id;
+
+
+    public String getFluxoId() {
+        return fluxoId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setFluxoId(String fluxoId) {
+        this.fluxoId = fluxoId;
     }
 
     public String getCpf() {

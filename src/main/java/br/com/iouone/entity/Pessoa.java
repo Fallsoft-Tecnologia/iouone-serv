@@ -28,6 +28,8 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @Column(name = "customer_id")
     private String customerId;
+    @Column(name="fluxo_id")
+    private String fluxoId;
 
     @ManyToOne
     @JoinColumn(name = "fk_atividade_fisica")
@@ -96,6 +98,14 @@ public class Pessoa {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getFluxoId() {
+        return fluxoId;
+    }
+
+    public void setFluxoId(String fluxoId) {
+        this.fluxoId = fluxoId;
     }
 
     public AtividadeFisica getAtividadeFisica() {

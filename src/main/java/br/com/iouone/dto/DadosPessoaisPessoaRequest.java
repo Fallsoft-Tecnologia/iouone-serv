@@ -4,30 +4,10 @@ import java.time.LocalDate;
 
 public class DadosPessoaisPessoaRequest {
 
-    private Integer idPessoa;
     private String nome;
     private LocalDate dataNascimento;
-    private String telefone;
-    private String cpf;
+    private String celular;
 
-    public DadosPessoaisPessoaRequest() {
-    }
-
-    public DadosPessoaisPessoaRequest(Integer idPessoa, String nome, LocalDate dataNascimento, String telefone, String cpf) {
-        this.idPessoa = idPessoa;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.telefone = telefone;
-        this.cpf = cpf;
-    }
-
-    public Integer getIdPessoa() {
-        return idPessoa;
-    }
-
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
-    }
 
     public String getNome() {
         return nome;
@@ -45,19 +25,11 @@ public class DadosPessoaisPessoaRequest {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 }

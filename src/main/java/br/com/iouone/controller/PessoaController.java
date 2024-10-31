@@ -57,9 +57,9 @@ public class PessoaController {
 
 
     @PostMapping("cadastro/dados/login")
-    public ResponseEntity<PessoaResponse> cadastroLoginPessoa(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> cadastroLoginPessoa(@RequestBody LoginDTO loginDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginDTO));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -68,27 +68,27 @@ public class PessoaController {
 
 
     @PostMapping("cadastro/dados/pessoais")
-    public ResponseEntity<PessoaResponse> cadastroDadosPessoais(@RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest) {
+    public ResponseEntity<String> cadastroDadosPessoais(@RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosPessoais(dadosPessoaisPessoaRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosPessoais(dadosPessoaisPessoaRequest, fluxoId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping("cadastro/dados/endereco")
-    public ResponseEntity<PessoaResponse> cadastroDadosEndereco(@RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest) {
+    public ResponseEntity<String> cadastroDadosEndereco(@RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosEndereco(dadosPessoaisEnderecoRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosEndereco(dadosPessoaisEnderecoRequest, fluxoId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping("cadastro/dados/corporais")
-    public ResponseEntity<PessoaResponse> cadastroDadosCorporais(@RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest) {
+    public ResponseEntity<String> cadastroDadosCorporais(@RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosCorporais(dadosPessoaisCorporaisRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosCorporais(dadosPessoaisCorporaisRequest, fluxoId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
