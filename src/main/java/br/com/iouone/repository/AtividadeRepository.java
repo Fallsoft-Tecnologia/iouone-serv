@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AtividadeRepository extends JpaRepository<AtividadeFisica,Integer> {
+
+    AtividadeFisica findAtividadeFisicaByAtividadeFisica(String atividadeFisica);
 }

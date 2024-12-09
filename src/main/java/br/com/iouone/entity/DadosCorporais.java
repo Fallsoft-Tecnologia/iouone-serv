@@ -10,15 +10,11 @@ public class DadosCorporais {
     @Column(name = "id")
     private int id;
     @Column(name = "altura")
-    private Integer altura;
+    private Float altura;
     @Column(name = "peso_atual")
-    private Integer pesoAtual;
+    private Float pesoAtual;
     @Column(name = "peso_ideal")
-    private Integer pesoIdeal;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_pessoa")
-    private Pessoa pessoa;
+    private Float pesoIdeal;
 
     public int getId() {
         return id;
@@ -28,35 +24,27 @@ public class DadosCorporais {
         this.id = id;
     }
 
-    public Integer getAltura() {
+    public Float getAltura() {
         return altura;
     }
 
-    public void setAltura(Integer altura) {
+    public void setAltura(Float altura) {
         this.altura = altura;
     }
 
-    public Integer getPesoAtual() {
+    public Float getPesoAtual() {
         return pesoAtual;
     }
 
-    public void setPesoAtual(Integer pesoAtual) {
+    public void setPesoAtual(Float pesoAtual) {
         this.pesoAtual = pesoAtual;
     }
 
-    public Integer getPesoIdeal() {
+    public Float getPesoIdeal() {
         return pesoIdeal;
     }
 
-    public void setPesoIdeal(Integer pesoIdeal) {
+    public void setPesoIdeal(Float pesoIdeal) {
         this.pesoIdeal = pesoIdeal;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
     }
 }

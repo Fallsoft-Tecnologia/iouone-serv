@@ -28,10 +28,20 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @Column(name = "customer_id")
     private String customerId;
+    @Column(name="fluxo_id")
+    private String fluxoId;
 
     @ManyToOne
     @JoinColumn(name = "fk_atividade_fisica")
     private AtividadeFisica atividadeFisica;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_endereco")
+    private Endereco endereco;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_dados_corporais")
+    private DadosCorporais dadosCorporais;
 
 
     public Integer getId() {
@@ -90,6 +100,14 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
+    public String getFluxoId() {
+        return fluxoId;
+    }
+
+    public void setFluxoId(String fluxoId) {
+        this.fluxoId = fluxoId;
+    }
+
     public AtividadeFisica getAtividadeFisica() {
         return atividadeFisica;
     }
@@ -99,7 +117,7 @@ public class Pessoa {
     }
 
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
-        return passwordEncoder.matches(loginRequest.senha(), this.senha);
+        return passwordEncoder.matches(loginRequest.getPassword(), this.senha);
     }
 
     public String getCustomerId() {
@@ -108,5 +126,21 @@ public class Pessoa {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public DadosCorporais getDadosCorporais() {
+        return dadosCorporais;
+    }
+
+    public void setDadosCorporais(DadosCorporais dadosCorporais) {
+        this.dadosCorporais = dadosCorporais;
     }
 }

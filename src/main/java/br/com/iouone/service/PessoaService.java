@@ -1,28 +1,24 @@
 package br.com.iouone.service;
 
 import br.com.iouone.config.RabbitConfig;
-import br.com.iouone.dto.PessoaDTO;
-import br.com.iouone.dto.PessoaRequest;
-import br.com.iouone.dto.PessoaResponse;
-import br.com.iouone.entity.AtividadeFisica;
-import br.com.iouone.entity.Pessoa;
+import br.com.iouone.dto.*;
+import br.com.iouone.entity.*;
+import br.com.iouone.mapper.DadosCorporaisMapper;
+import br.com.iouone.mapper.EnderecoMapper;
 import br.com.iouone.mapper.PessoaMapper;
 import br.com.iouone.mapper.PessoaToDtoConverter;
-import br.com.iouone.repository.AtividadeRepository;
 import br.com.iouone.repository.PessoaRepository;
-import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class PessoaService {
@@ -30,8 +26,6 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    @Autowired
-    private AtividadeRepository atividadeFisicaRepository;
 
     @Autowired
     private PessoaMapper pessoaMapper;
@@ -44,6 +38,22 @@ public class PessoaService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private EnderecoService enderecoService;
+
+
+    @Autowired
+    private EnderecoMapper enderecoMapper;
+
+    @Autowired
+    private AtividadeFisicaService atividadeFisicaService;
+
+    @Autowired
+    private DadosCorporaisService dadosCorporaisService;
+
+    @Autowired
+    private DadosCorporaisMapper dadosCorporaisMapper;
+
     public PessoaResponse savePessoa(PessoaRequest pessoaRequest) {
         Pessoa pessoa = pessoaMapper.toEntity(pessoaRequest);
         pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
@@ -53,7 +63,6 @@ public class PessoaService {
         rabbitTemplate.convertAndSend(RabbitConfig.PESSOA_REGISTRATION_QUEUE, pessoaDTO);
         return pessoaMapper.toResponse(savedPessoa);
     }
-
 
 
     public Optional<PessoaResponse> findPessoaById(Integer id) {
@@ -77,9 +86,7 @@ public class PessoaService {
             pessoa.setDataNascimento(pessoaRequest.getDataNascimento());
 
             if (pessoaRequest.getAtividadeFisicaId() != null) {
-                AtividadeFisica atividadeFisica = atividadeFisicaRepository
-                        .findById(pessoaRequest.getAtividadeFisicaId())
-                        .orElse(null);
+                AtividadeFisica atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorId(pessoaRequest.getAtividadeFisicaId());
                 pessoa.setAtividadeFisica(atividadeFisica);
             }
 
@@ -101,10 +108,56 @@ public class PessoaService {
     }
 
     public void updateCustomerId(Integer pessoaId, String customerId) {
-        Pessoa pessoa = pessoaRepository.findById(pessoaId)
-                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + pessoaId));
-
+        Pessoa pessoa = findByIdPessoa(pessoaId);
         pessoa.setCustomerId(customerId);
         pessoaRepository.save(pessoa);
     }
+
+    public String cadastroDadosLogin(LoginDTO loginDTO) {
+        Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
+        pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
+        pessoa.setFluxoId(UUID.randomUUID().toString());
+        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        return savePessoa.getFluxoId();
+    }
+
+    public String cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        Pessoa pessoa = pessoaMapper.convertDadosPessoaisToPessoa(getPessoa, dadosPessoaisPessoaRequest);
+        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        return savePessoa.getFluxoId();
+    }
+
+    public String cadastroDadosEndereco(DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        Endereco convertEndereco = enderecoMapper.convertEnderecoResponsetoEndereco(dadosPessoaisEnderecoRequest);
+        Endereco saveEndereco = enderecoService.saveEndereco(convertEndereco);
+        Pessoa pessoa = pessoaMapper.convertDadosEnderecoToPessoa(getPessoa, saveEndereco);
+        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        return savePessoa.getFluxoId();
+
+    }
+
+    public String cadastroDadosCorporais(DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, String fluxoId) {
+        Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
+        AtividadeFisica atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorNome(dadosPessoaisCorporaisRequest.getAtividadeFisica());
+        DadosCorporais convertDadosCorporais = dadosCorporaisMapper.convertDadosCorporaisRequesttoDadosCorporais(dadosPessoaisCorporaisRequest);
+        DadosCorporais saveDadosCorporais = dadosCorporaisService.saveDadosCorporais(convertDadosCorporais);
+        Pessoa savePessoa = pessoaMapper.convertDadosCorporaisToPessoa(getPessoa, saveDadosCorporais, atividadeFisica);
+        return savePessoa.getFluxoId();
+    }
+
+    private Pessoa findByIdPessoa(Integer id) {
+        return pessoaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + id));
+    }
+
+    private Pessoa findPessoaByFluxoId(String fluxoId) {
+        Pessoa pessoa = pessoaRepository.findByFluxoId(fluxoId);
+        if (pessoa == null) {
+            throw new RuntimeException("Pessoa não encontrada");
+        }
+        return pessoa;
+    }
+
 }

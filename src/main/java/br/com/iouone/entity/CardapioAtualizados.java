@@ -12,7 +12,7 @@ public class CardapioAtualizados {
     private String nome;
     private String descricao;
 
-    @Lob
+
     private byte[] foto;
 
     public CardapioAtualizados() {

@@ -14,7 +14,7 @@ public class TreinoAtualizado {
 
     private String descricao;
 
-    @Lob
+
     private byte[] foto;
 
     public TreinoAtualizado() {

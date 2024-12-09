@@ -15,7 +15,7 @@ public class FitDance {
     @Column(name = "url_fit_dance")
     private String urlFitDance;
 
-    @Lob
+    
     private byte[] video;
 
     private Integer contadorVistos;
@@ -26,7 +26,7 @@ public class FitDance {
 
     private String autor;
 
-    @Lob
+
     private byte[] foto;
 
     public FitDance() {

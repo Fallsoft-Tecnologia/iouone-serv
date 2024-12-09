@@ -35,8 +35,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v2/pessoas/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v2/pessoas").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v2/login/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v2/pessoas/cadastro/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable()) //ATIVAR QUANDO SAIR DO AMBIENTE DE PRODUÇÃO
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
@@ -46,7 +47,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtEncoder jwtEncoder(){
+    public JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(this.publicKey)
                 .privateKey(this.privateKey)
                 .build();
@@ -55,12 +56,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder(){
+    public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -1,16 +1,21 @@
 package br.com.iouone.controller;
 
+import br.com.iouone.config.SecurityConstants;
+import br.com.iouone.dto.IngredienteDTO;
 import br.com.iouone.entity.Ingredientes;
 import br.com.iouone.service.IngredientesService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/ingredientes")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class IngredientesController {
 
     @Autowired
@@ -29,8 +34,21 @@ public class IngredientesController {
     }
 
     @PostMapping
-    public Ingredientes create(@RequestBody Ingredientes ingrediente) {
-        return service.create(ingrediente);
+    public ResponseEntity<List<Ingredientes>> create(@RequestBody List<IngredienteDTO> ingredientesDTO) {
+        List<Ingredientes> ingredientes = new ArrayList<>();
+        for (IngredienteDTO dto : ingredientesDTO) {
+            Ingredientes ingrediente = new Ingredientes();
+            ingrediente.setNome(dto.getNome());
+
+            Integer unidadeMedidaId = null;
+            if (dto.getUnidadeDeMedida() != null) {
+                unidadeMedidaId = Integer.parseInt(dto.getUnidadeDeMedida());
+            }
+
+
+            ingredientes.add(service.create(ingrediente));
+        }
+        return ResponseEntity.ok(ingredientes);
     }
 
     @PutMapping("/{id}")

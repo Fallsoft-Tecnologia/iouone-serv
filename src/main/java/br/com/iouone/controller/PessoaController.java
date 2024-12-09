@@ -1,8 +1,9 @@
 package br.com.iouone.controller;
 
-import br.com.iouone.dto.PessoaRequest;
-import br.com.iouone.dto.PessoaResponse;
+import br.com.iouone.config.SecurityConstants;
+import br.com.iouone.dto.*;
 import br.com.iouone.service.PessoaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/pessoas")
+@SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
 public class PessoaController {
 
     @Autowired
@@ -52,4 +54,44 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping("cadastro/dados/login")
+    public ResponseEntity<String> cadastroLoginPessoa(@RequestBody LoginDTO loginDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
+
+
+    @PostMapping("cadastro/dados/pessoais")
+    public ResponseEntity<String> cadastroDadosPessoais(@RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, @RequestHeader("fluxoId") String fluxoId) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosPessoais(dadosPessoaisPessoaRequest, fluxoId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("cadastro/dados/endereco")
+    public ResponseEntity<String> cadastroDadosEndereco(@RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, @RequestHeader("fluxoId") String fluxoId) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosEndereco(dadosPessoaisEnderecoRequest, fluxoId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("cadastro/dados/corporais")
+    public ResponseEntity<String> cadastroDadosCorporais(@RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, @RequestHeader("fluxoId") String fluxoId) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosCorporais(dadosPessoaisCorporaisRequest, fluxoId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

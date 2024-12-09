@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -37,6 +38,9 @@ class PessoaServiceTest {
     @InjectMocks
     private PessoaService pessoaService;
 
+    @Mock
+    private RabbitTemplate rabbitTemplate;
+
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
@@ -61,7 +65,7 @@ class PessoaServiceTest {
             savedPessoa.setNome(pessoaRequest.getNome());
             savedPessoa.setEmail(pessoaRequest.getEmail());
 
-            PessoaResponse expectedResponse = new PessoaResponse(1, "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
+            PessoaResponse expectedResponse = new PessoaResponse( "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
 
             when(pessoaMapper.toEntity(pessoaRequest)).thenReturn(pessoaEntity);
             when(passwordEncoder.encode(pessoaRequest.getSenha())).thenReturn("encodedSenha");
@@ -100,7 +104,7 @@ class PessoaServiceTest {
             savedPessoa.setNome(pessoaRequest.getNome());
             savedPessoa.setEmail(pessoaRequest.getEmail());
 
-            PessoaResponse expectedResponse = new PessoaResponse(1, "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
+            PessoaResponse expectedResponse = new PessoaResponse( "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
 
             when(pessoaMapper.toEntity(pessoaRequest)).thenReturn(pessoaEntity);
             when(passwordEncoder.encode(pessoaRequest.getSenha())).thenReturn("encodedSenha");
@@ -132,7 +136,7 @@ class PessoaServiceTest {
             savedPessoa.setNome(pessoaRequest.getNome());
             savedPessoa.setEmail(pessoaRequest.getEmail());
 
-            PessoaResponse expectedResponse = new PessoaResponse(2, "Outro Nome", "outro@example.com", "987654321", "123456789", LocalDate.of(1990, 1, 1), "2");
+            PessoaResponse expectedResponse = new PessoaResponse( "Outro Nome", "outro@example.com", "987654321", "123456789", LocalDate.of(1990, 1, 1), "2");
 
             when(pessoaMapper.toEntity(pessoaRequest)).thenReturn(pessoaEntity);
             when(passwordEncoder.encode(pessoaRequest.getSenha())).thenReturn("encodedOutraSenha");
@@ -157,7 +161,7 @@ class PessoaServiceTest {
             pessoa.setId(1);
             pessoa.setNome("Nome");
 
-            PessoaResponse expectedResponse = new PessoaResponse(1, "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
+            PessoaResponse expectedResponse = new PessoaResponse( "Nome", "email@example.com", "123456789", "987654321", LocalDate.now(), "1");
 
             when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
             when(pessoaMapper.toResponse(pessoa)).thenReturn(expectedResponse);
@@ -187,7 +191,7 @@ class PessoaServiceTest {
         @Test
         @DisplayName("Should update Pessoa successfully")
         void testUpdatePessoa() {
-            PessoaRequest pessoaRequest = new PessoaRequest("NomeAtualizado", "emailAtualizado@example.com", "novaSenha123", "123456789", "987654321", LocalDate.now(), 1);
+            PessoaRequest pessoaRequest = new PessoaRequest("NomeAtualizado", "emailAtualizado@example.com", "novaSenha123", "123456789", "987654321", LocalDate.now(), null);
 
             Pessoa existingPessoa = new Pessoa();
             existingPessoa.setId(1);
@@ -200,7 +204,7 @@ class PessoaServiceTest {
             updatedPessoa.setEmail(pessoaRequest.getEmail());
             updatedPessoa.setSenha("encodedNovaSenha");
 
-            PessoaResponse expectedResponse = new PessoaResponse(1, "NomeAtualizado", "emailAtualizado@example.com", "123456789", "987654321", LocalDate.now(), "1");
+            PessoaResponse expectedResponse = new PessoaResponse( "NomeAtualizado", "emailAtualizado@example.com", "123456789", "987654321", LocalDate.now(), null);
 
             when(pessoaRepository.findById(1)).thenReturn(Optional.of(existingPessoa));
             when(passwordEncoder.encode(pessoaRequest.getSenha())).thenReturn("encodedNovaSenha");
@@ -241,8 +245,8 @@ class PessoaServiceTest {
             pessoa2.setId(2);
             pessoa2.setNome("Nome2");
 
-            PessoaResponse response1 = new PessoaResponse(1, "Nome1", "email1@example.com", "123456789", "987654321", LocalDate.now(), "1");
-            PessoaResponse response2 = new PessoaResponse(2, "Nome2", "email2@example.com", "123456789", "987654321", LocalDate.now(), "2");
+            PessoaResponse response1 = new PessoaResponse( "Nome1", "email1@example.com", "123456789", "987654321", LocalDate.now(), "1");
+            PessoaResponse response2 = new PessoaResponse( "Nome2", "email2@example.com", "123456789", "987654321", LocalDate.now(), "2");
 
             List<Pessoa> pessoas = Arrays.asList(pessoa1, pessoa2);
             List<PessoaResponse> expectedResponses = Arrays.asList(response1, response2);

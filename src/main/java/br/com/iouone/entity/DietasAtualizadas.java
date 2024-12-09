@@ -14,7 +14,7 @@ public class DietasAtualizadas {
 
     private String descricao;
 
-    @Lob
+
     private byte[] foto;
 
     public DietasAtualizadas() {
