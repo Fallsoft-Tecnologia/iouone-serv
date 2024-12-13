@@ -147,6 +147,47 @@ public class PessoaService {
         return savePessoa.getFluxoId();
     }
 
+    public CadastroCompletoDTO getCadastroCompleto(String fluxoId) {
+        // Recuperar a entidade Pessoa e outros dados relacionados
+        Pessoa pessoa = pessoaRepository.findByFluxoId(fluxoId);
+        if (pessoa == null) {
+            throw new RuntimeException("Fluxo não encontrado.");
+        }
+
+        CadastroCompletoDTO dto = new CadastroCompletoDTO();
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setCpf(pessoa.getCpf());
+        loginDTO.setEmail(pessoa.getEmail());
+        dto.setLogin(loginDTO);
+
+        DadosPessoaisPessoaRequest dadosPessoais = new DadosPessoaisPessoaRequest();
+        dadosPessoais.setNome(pessoa.getNome());
+        dadosPessoais.setDataNascimento(pessoa.getDataNascimento());
+        dadosPessoais.setCelular(pessoa.getCelular());
+        dto.setDadosPessoais(dadosPessoais);
+
+        if (pessoa.getEndereco() != null) {
+            DadosPessoaisEnderecoRequest endereco = new DadosPessoaisEnderecoRequest();
+            endereco.setCep(pessoa.getEndereco().getCep());
+            endereco.setEndereco(pessoa.getEndereco().getEndereco());
+            endereco.setCidade(pessoa.getEndereco().getCidade());
+            endereco.setEstado(pessoa.getEndereco().getEstado());
+            endereco.setPais(pessoa.getEndereco().getPaises());
+            dto.setEndereco(endereco);
+        }
+
+        if (pessoa.getDadosCorporais() != null) {
+            DadosPessoaisCorporaisRequest corporais = new DadosPessoaisCorporaisRequest();
+            corporais.setPesoIdeal(pessoa.getDadosCorporais().getPesoIdeal());
+            corporais.setAltura(pessoa.getDadosCorporais().getAltura());
+            corporais.setPesoAtual(pessoa.getDadosCorporais().getPesoAtual());
+            dto.setCorporais(corporais);
+        }
+
+        return dto;
+    }
+
     private Pessoa findByIdPessoa(Integer id) {
         return pessoaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + id));

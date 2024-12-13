@@ -94,4 +94,15 @@ public class PessoaController {
         }
     }
 
+    @GetMapping("/dados")
+    public ResponseEntity<?> getCadastroDados(@RequestHeader("fluxoId") String fluxoId) {
+        try {
+            CadastroCompletoDTO cadastroCompleto = pessoaService.getCadastroCompleto(fluxoId);
+            return ResponseEntity.ok(cadastroCompleto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+
 }
