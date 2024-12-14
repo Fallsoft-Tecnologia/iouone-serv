@@ -274,6 +274,35 @@ CREATE TABLE treino_completo
     id_treino_atualizado INT
 );
 
+CREATE TABLE tb_biotipo
+(
+    id      INT PRIMARY KEY,
+    biotipo VARCHAR(255)
+);
+
+CREATE TABLE tb_objetivo
+(
+    id       INT PRIMARY KEY,
+    objetivo VARCHAR(255)
+);
+
+CREATE TABLE tb_calculo_tdee
+(
+    id           INT PRIMARY KEY,
+    tdee DOUBLE,
+    calorias_diarias DOUBLE,
+    data_calculo DATE,
+    fk_pessoa    int,
+    fk_objetivo  int,
+    fk_biotipo   int
+);
+
+ALTER TABLE tb_calculo_tdee
+    ADD FOREIGN KEY (fk_pessoa) REFERENCES tb_pessoa (id);
+ALTER TABLE tb_calculo_tdee
+    ADD FOREIGN KEY (fk_objetivo) REFERENCES tb_objetivo (id);
+ALTER TABLE tb_calculo_tdee
+    ADD FOREIGN KEY (fk_biotipo) REFERENCES tb_biotipo (id);
 ALTER TABLE fit_dance
     ADD FOREIGN KEY (id_tipo_fit_dance) REFERENCES tipo_fit_dance (id);
 ALTER TABLE dieta_detalhada
@@ -339,6 +368,20 @@ INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
 VALUES (3, 'test3');
 INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
 VALUES (4, 'test4');
+
+INSERT INTO iouone.tb_biotipo (id, biotipo)
+VALUES (1, 'Ectomorfo');
+INSERT INTO iouone.tb_biotipo (id, biotipo)
+VALUES (2, 'Mesomorfo');
+INSERT INTO iouone.tb_biotipo (id, biotipo)
+VALUES (3, 'Endomorfo');
+
+INSERT INTO iouone.tb_objetivo (id, objetivo)
+VALUES (1, 'Perda de Peso');
+INSERT INTO iouone.tb_objetivo (id, objetivo)
+VALUES (2, 'Ganho de Massa Muscular');
+INSERT INTO iouone.tb_objetivo (id, objetivo)
+VALUES (3, 'Manutenção');
 
 
 

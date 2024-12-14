@@ -1,5 +1,6 @@
 package br.com.iouone.dto;
 
+import java.io.File;
 import java.time.LocalDate;
 
 public class PessoaCalculoDTO {
@@ -11,7 +12,7 @@ public class PessoaCalculoDTO {
     private LocalDate dataNascimento;
 
     private String atividadeFisica;
-    private int altura;
+    private Float altura;
     private double pesoAtual;
     private double pesoIdeal;
 
@@ -80,11 +81,11 @@ public class PessoaCalculoDTO {
         this.atividadeFisica = atividadeFisica;
     }
 
-    public int getAltura() {
+    public Float getAltura() {
         return altura;
     }
 
-    public void setAltura(int altura) {
+    public void setAltura(Float altura) {
         this.altura = altura;
     }
 
