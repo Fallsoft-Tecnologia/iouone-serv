@@ -188,7 +188,7 @@ public class PessoaService {
         return dto;
     }
 
-    private Pessoa findByIdPessoa(Integer id) {
+    public Pessoa findByIdPessoa(Integer id) {
         return pessoaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + id));
     }

@@ -17,24 +17,23 @@ import java.util.Optional;
 @Service
 public class TDEECalculatorService {
 
-    private final PessoaRepository pessoaRepository;
+    private final PessoaService pessoaService;
     private final CalculoTDEERepository calculoTDEERepository;
     private final ObjetivoRepository objetivoRepository;
     private final BiotipoRepository biotipoRepository;
 
     @Autowired
-    public TDEECalculatorService(PessoaRepository pessoaRepository,
+    public TDEECalculatorService(PessoaService pessoaService,
                                  CalculoTDEERepository calculoTDEERepository,
                                  ObjetivoRepository objetivoRepository, BiotipoRepository biotipoRepository) {
-        this.pessoaRepository = pessoaRepository;
+        this.pessoaService = pessoaService;
         this.calculoTDEERepository = calculoTDEERepository;
         this.objetivoRepository = objetivoRepository;
         this.biotipoRepository = biotipoRepository;
     }
 
     public PessoaCalculoDTO calcularTDEE(int pessoaId, int objetivoId, int biotipoId) {
-        Pessoa pessoa = pessoaRepository.findById(pessoaId)
-                .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada"));
+        Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
 
         DadosCorporais dadosCorporais = pessoa.getDadosCorporais();
         if (dadosCorporais == null) {
@@ -47,7 +46,7 @@ public class TDEECalculatorService {
         Biotipo biotipo = biotipoRepository.findById(biotipoId)
                 .orElseThrow(() -> new IllegalArgumentException("Biotipo não encontrado"));
 
-        double tmb = calcularTMB(dadosCorporais);
+        double tmb = calcularTMB(dadosCorporais,pessoaId);
         double fatorAtividade = obterFatorAtividade(pessoa.getAtividadeFisica().getAtividadeFisica());
 
         double tdee = tmb * fatorAtividade;
@@ -69,11 +68,13 @@ public class TDEECalculatorService {
         }
     }
 
-    private double calcularTMB(DadosCorporais dadosCorporais) {
-        int idade = dadosCorporais.getPessoa().getDataNascimento().until(LocalDate.now()).getYears();
-        int altura = dadosCorporais.getAltura();
-        BigDecimal pesoBD = dadosCorporais.getPesoAtual();
-        int peso = (pesoBD != null) ? pesoBD.setScale(0, RoundingMode.DOWN).intValue() : 0;
+    private double calcularTMB(DadosCorporais dadosCorporais, Integer pessoaId) {
+        Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
+
+        int idade = pessoa.getDataNascimento().until(LocalDate.now()).getYears();
+        Float altura = dadosCorporais.getAltura();
+        Float pesoBD = dadosCorporais.getPesoAtual();
+        Float peso = (pesoBD != null) ? pesoBD : 0;
         
         return 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * idade);
     }
@@ -96,8 +97,8 @@ public class TDEECalculatorService {
     }
 
     public PessoaCalculoDTO criarCalculoAutomaticamente(int pessoaId, int objetivoId, int biotipoId, String dataCalculo) {
-        Pessoa pessoa = pessoaRepository.findById(pessoaId)
-                .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada"));
+        Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
+
 
         Objetivo objetivo = objetivoRepository.findById(objetivoId)
                 .orElseThrow(() -> new IllegalArgumentException("Objetivo não encontrado"));
@@ -136,11 +137,11 @@ public class TDEECalculatorService {
         DadosCorporais dadosCorporais = pessoa.getDadosCorporais();
         if (dadosCorporais != null) {
             dto.setPesoAtual(Optional.ofNullable(dadosCorporais.getPesoAtual())
-                    .map(BigDecimal::doubleValue)
+                    .map(Float::doubleValue)
                     .orElse(0.0));
 
             dto.setPesoIdeal(Optional.ofNullable(dadosCorporais.getPesoIdeal())
-                    .map(BigDecimal::doubleValue)
+                    .map(Float::doubleValue)
                     .orElse(0.0));
 
             dto.setAltura(dadosCorporais.getAltura());
