@@ -6,6 +6,7 @@ import br.com.iouone.entity.MarmitaFit;
 import br.com.iouone.service.MarmitaFitService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class MarmitaFitController {
     }
 
     @GetMapping("/{id}/detalhes")
-    public ResponseEntity<MarmitaFitDTO> getMarmitaFitWithIngredients(@PathVariable Integer id) {
+    public ResponseEntity<MarmitaFitDTO> getMarmitaFitWithIngredients(@Valid @PathVariable Integer id) {
         try {
             MarmitaFitDTO marmitaFitDTO = service.getMarmitaFitWithIngredients(id);
             return ResponseEntity.ok(marmitaFitDTO);

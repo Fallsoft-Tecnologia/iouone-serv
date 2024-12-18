@@ -25,5 +25,4 @@ public class AtividadeFisicaController {
         return atividadeFisicaService.buscarAtividadeFisicas();
     }
 
-
 }
