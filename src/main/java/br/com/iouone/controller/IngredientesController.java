@@ -5,6 +5,7 @@ import br.com.iouone.dto.IngredienteDTO;
 import br.com.iouone.entity.Ingredientes;
 import br.com.iouone.service.IngredientesService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class IngredientesController {
     }
 
     @PostMapping
-    public ResponseEntity<List<Ingredientes>> create(@RequestBody List<IngredienteDTO> ingredientesDTO) {
+    public ResponseEntity<List<Ingredientes>> create(@Valid @RequestBody List<IngredienteDTO> ingredientesDTO) {
         List<Ingredientes> ingredientes = new ArrayList<>();
         for (IngredienteDTO dto : ingredientesDTO) {
             Ingredientes ingrediente = new Ingredientes();

@@ -5,6 +5,7 @@ import br.com.iouone.dto.ComentarioRequest;
 import br.com.iouone.service.ComentarioMensagemService;
 import br.com.iouone.service.MensagensService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ComentarioMensagemController {
     private MensagensService mensagensService;
 
     @PostMapping("/{mensagemId}/comentarios")
-    public ResponseEntity<String> adicionarComentario(@PathVariable int mensagemId, @RequestBody ComentarioRequest comentarioRequest) {
+    public ResponseEntity<String> adicionarComentario(@Valid @PathVariable int mensagemId, @RequestBody ComentarioRequest comentarioRequest) {
         Integer idComentarioPai = comentarioRequest.getIdComentarioPai();
         String mensagemComentario = comentarioRequest.getMensagemComentario();
 

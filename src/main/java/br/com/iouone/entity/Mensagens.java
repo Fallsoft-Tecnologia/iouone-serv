@@ -2,6 +2,8 @@ package br.com.iouone.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,9 +18,11 @@ public class Mensagens {
     @Column(name = "id")
     private int id;
 
+    @NotBlank(message = "A mensagem não pode ser vazia.")
     @Column(name = "mensagem")
     private String mensagem;
 
+    @NotNull(message = "A data de envio não pode ser nula.")
     @Column(name = "data_envio")
     private LocalDateTime dataEnvio;
 

@@ -1,12 +1,18 @@
 package br.com.iouone.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MensagemDTO {
     private int id;
+    @NotBlank(message = "A mensagem não pode ser vazia.")
     private String mensagem;
+    @NotNull(message = "A data de envio não pode ser nula.")
     private LocalDateTime dataEnvio;
+    @NotBlank(message = "O nome da pessoa é obrigatório.")
     private String nomePessoa;
 
     public MensagemDTO(int id, String mensagem, LocalDateTime dataEnvio, String nomePessoa) {

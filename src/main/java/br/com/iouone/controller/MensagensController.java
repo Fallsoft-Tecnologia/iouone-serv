@@ -10,6 +10,7 @@ import br.com.iouone.repository.MensagensRepository;
 import br.com.iouone.repository.PessoaRepository;
 import br.com.iouone.service.MensagensService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class MensagensController {
     private JwtDecoder jwtDecoder;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Mensagens> createMensagem(@RequestHeader("Authorization") String authorization, @RequestBody Mensagens novaMensagem) {
+    public ResponseEntity<Mensagens> createMensagem(@Valid @RequestHeader("Authorization") String authorization, @RequestBody Mensagens novaMensagem) {
         String token = authorization.substring(7);
         Long userId;
         try {
