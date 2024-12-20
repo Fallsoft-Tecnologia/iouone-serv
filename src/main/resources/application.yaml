@@ -30,7 +30,7 @@ jwt:
     key: classpath:private.pem
 
 server:
-  port: 0
+  port: 7071
 springdoc:
   swagger-ui:
     enabled: true
@@ -42,7 +42,7 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:7073/eureka
 
 mq:
   queue:
