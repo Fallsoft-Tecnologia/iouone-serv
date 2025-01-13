@@ -1,9 +1,20 @@
 package br.com.iouone.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 public class CadastroCompletoDTO {
+    @NotNull(message = "Os dados de login são obrigatórios.")
+    @Valid
     private LoginDTO login;
+    @NotNull(message = "Os dados pessoais são obrigatórios.")
+    @Valid
     private DadosPessoaisPessoaRequest dadosPessoais;
+    @NotNull(message = "O endereço é obrigatório.")
+    @Valid
     private DadosPessoaisEnderecoRequest endereco;
+    @NotNull(message = "Os dados corporais são obrigatórios.")
+    @Valid
     private DadosPessoaisCorporaisRequest corporais;
 
     public LoginDTO getLogin() {

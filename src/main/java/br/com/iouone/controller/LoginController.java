@@ -5,6 +5,7 @@ import br.com.iouone.dto.LoginRequest;
 import br.com.iouone.dto.LoginResponse;
 import br.com.iouone.repository.PessoaRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,7 +37,7 @@ public class LoginController {
     }
 
     @PostMapping()
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest){
 
         var pessoa = pessoaRepository.findByEmail(loginRequest.getEmail());
         if (pessoa.isEmpty() || !pessoa.get().isLoginCorrect(loginRequest, passwordEncoder)){

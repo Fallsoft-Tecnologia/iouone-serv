@@ -1,7 +1,10 @@
 package br.com.iouone.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ComentarioRequest {
     private Integer idComentarioPai;
+    @NotBlank(message = "A mensagem do comentário não pode estar em branco.")
     private String mensagemComentario;
     public ComentarioRequest() {}
 
