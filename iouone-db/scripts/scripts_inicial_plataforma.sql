@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS iouone_hml;
+
+USE iouone_hml;
+
 -- TABELA ATIVIDADE FISICA --
 CREATE TABLE tb_atividade_fisica
 (
