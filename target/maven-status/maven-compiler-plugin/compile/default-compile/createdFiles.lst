@@ -1,0 +1,16 @@
+br\com\iouone\controller\PessoaController.class
+br\com\iouone\repository\PessoaRepository.class
+br\com\iouone\repository\MensagensRepository.class
+br\com\iouone\entity\ComentarioMensagem.class
+br\com\iouone\repository\ComentatioMensagemRepository.class
+br\com\iouone\repository\AtividadeRepository.class
+br\com\iouone\repository\DadosCorporaisRepository.class
+br\com\iouone\entity\DadosCorporais.class
+br\com\iouone\IouoneApplication.class
+br\com\iouone\entity\AtividadeFisica.class
+br\com\iouone\entity\Mensagens.class
+br\com\iouone\service\PessoaService.class
+br\com\iouone\mapper\PessoaMapper.class
+br\com\iouone\dto\PessoaRequest.class
+br\com\iouone\dto\PessoaResponse.class
+br\com\iouone\entity\Pessoa.class
