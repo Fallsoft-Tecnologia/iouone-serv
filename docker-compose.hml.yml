@@ -44,4 +44,3 @@ networks:
   backend:
     name: backend
     driver: "bridge"
-

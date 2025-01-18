@@ -364,27 +364,27 @@ ALTER TABLE treino_completo
 
 
 
-INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
+INSERT INTO tb_atividade_fisica (id, atividade_fisica)
 VALUES (1, 'test1');
-INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
+INSERT INTO tb_atividade_fisica (id, atividade_fisica)
 VALUES (2, 'test2');
-INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
+INSERT INTO tb_atividade_fisica (id, atividade_fisica)
 VALUES (3, 'test3');
-INSERT INTO `IOUONE`.`tb_atividade_fisica` (`id`, `atividade_fisica`)
+INSERT INTO tb_atividade_fisica (id, atividade_fisica)
 VALUES (4, 'test4');
 
-INSERT INTO iouone.tb_biotipo (id, biotipo)
+INSERT INTO tb_biotipo (id, biotipo)
 VALUES (1, 'Ectomorfo');
-INSERT INTO iouone.tb_biotipo (id, biotipo)
+INSERT INTO tb_biotipo (id, biotipo)
 VALUES (2, 'Mesomorfo');
-INSERT INTO iouone.tb_biotipo (id, biotipo)
+INSERT INTO tb_biotipo (id, biotipo)
 VALUES (3, 'Endomorfo');
 
-INSERT INTO iouone.tb_objetivo (id, objetivo)
+INSERT INTO tb_objetivo (id, objetivo)
 VALUES (1, 'Perda de Peso');
-INSERT INTO iouone.tb_objetivo (id, objetivo)
+INSERT INTO tb_objetivo (id, objetivo)
 VALUES (2, 'Ganho de Massa Muscular');
-INSERT INTO iouone.tb_objetivo (id, objetivo)
+INSERT INTO tb_objetivo (id, objetivo)
 VALUES (3, 'Manutenção');
 
 
