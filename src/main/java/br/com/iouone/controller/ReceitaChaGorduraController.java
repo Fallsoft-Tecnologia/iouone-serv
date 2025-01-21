@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v2/alimentacoes-diarias")
 @SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
+@CrossOrigin
 public class ReceitaChaGorduraController {
 
     @Autowired
