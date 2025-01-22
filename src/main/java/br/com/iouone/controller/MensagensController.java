@@ -26,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v2/mensagens")
 @SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
+@CrossOrigin
 public class MensagensController {
 
     @Autowired

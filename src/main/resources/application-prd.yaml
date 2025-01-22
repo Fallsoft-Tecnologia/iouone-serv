@@ -39,7 +39,7 @@ springdoc:
     urls:
       - url: /v3/api-docs
         name: IOUONE API
-    server-url: http://localhost:${local.server.port}
+    server-url: http://plataforma-prd.iouone.com.br
 
 eureka:
   client:

@@ -18,6 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v2/marmitas-fit")
 @SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
+@CrossOrigin
 public class MarmitaFitController {
 
     @Autowired
