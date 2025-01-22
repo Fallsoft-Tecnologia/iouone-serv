@@ -14,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v2/cha-gordura")
 @SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
+@CrossOrigin
 public class ChaGorduraController {
 
     @Autowired

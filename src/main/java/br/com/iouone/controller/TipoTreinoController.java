@@ -14,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v2/tipo-treino")
 @SecurityRequirement(name = SecurityConstants.BEARER_AUTH)
+@CrossOrigin
 public class TipoTreinoController {
 
     @Autowired

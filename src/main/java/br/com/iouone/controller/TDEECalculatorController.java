@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v2/tdee")
+@CrossOrigin
 public class TDEECalculatorController {
 
     private static final Logger logger = LoggerFactory.getLogger(TDEECalculatorController.class);
