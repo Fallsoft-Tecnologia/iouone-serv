@@ -2,7 +2,10 @@ package br.com.iouone.service;
 
 import br.com.iouone.config.RabbitConfig;
 import br.com.iouone.dto.*;
-import br.com.iouone.entity.*;
+import br.com.iouone.entity.AtividadeFisica;
+import br.com.iouone.entity.DadosCorporais;
+import br.com.iouone.entity.Endereco;
+import br.com.iouone.entity.Pessoa;
 import br.com.iouone.mapper.DadosCorporaisMapper;
 import br.com.iouone.mapper.EnderecoMapper;
 import br.com.iouone.mapper.PessoaMapper;
@@ -113,38 +116,37 @@ public class PessoaService {
         pessoaRepository.save(pessoa);
     }
 
-    public String cadastroDadosLogin(LoginDTO loginDTO) {
+    public ResponseFluxoId cadastroDadosLogin(LoginDTO loginDTO) {
         Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
         pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
         pessoa.setFluxoId(UUID.randomUUID().toString());
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return savePessoa.getFluxoId();
+        return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
-    public String cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
+    public ResponseFluxoId cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
         Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
         Pessoa pessoa = pessoaMapper.convertDadosPessoaisToPessoa(getPessoa, dadosPessoaisPessoaRequest);
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return savePessoa.getFluxoId();
+        return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
-    public String cadastroDadosEndereco(DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, String fluxoId) {
+    public ResponseFluxoId cadastroDadosEndereco(DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, String fluxoId) {
         Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
         Endereco convertEndereco = enderecoMapper.convertEnderecoResponsetoEndereco(dadosPessoaisEnderecoRequest);
         Endereco saveEndereco = enderecoService.saveEndereco(convertEndereco);
         Pessoa pessoa = pessoaMapper.convertDadosEnderecoToPessoa(getPessoa, saveEndereco);
         Pessoa savePessoa = pessoaRepository.save(pessoa);
-        return savePessoa.getFluxoId();
-
+        return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
-    public String cadastroDadosCorporais(DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, String fluxoId) {
+    public ResponseFluxoId cadastroDadosCorporais(DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, String fluxoId) {
         Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
         AtividadeFisica atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorNome(dadosPessoaisCorporaisRequest.getAtividadeFisica());
         DadosCorporais convertDadosCorporais = dadosCorporaisMapper.convertDadosCorporaisRequesttoDadosCorporais(dadosPessoaisCorporaisRequest);
         DadosCorporais saveDadosCorporais = dadosCorporaisService.saveDadosCorporais(convertDadosCorporais);
         Pessoa savePessoa = pessoaMapper.convertDadosCorporaisToPessoa(getPessoa, saveDadosCorporais, atividadeFisica);
-        return savePessoa.getFluxoId();
+        return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
     public CadastroCompletoDTO getCadastroCompleto(String fluxoId) {
