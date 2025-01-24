@@ -59,7 +59,7 @@ public class PessoaController {
 
 
     @PostMapping("cadastro/dados/login")
-    public ResponseEntity<String> cadastroLoginPessoa(@Valid @RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<ResponseFluxoId> cadastroLoginPessoa(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginDTO));
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class PessoaController {
 
 
     @PostMapping("cadastro/dados/pessoais")
-    public ResponseEntity<String> cadastroDadosPessoais(@Valid @RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, @RequestHeader("fluxoId") String fluxoId) {
+    public ResponseEntity<ResponseFluxoId> cadastroDadosPessoais(@Valid @RequestBody DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosPessoais(dadosPessoaisPessoaRequest, fluxoId));
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class PessoaController {
     }
 
     @PostMapping("cadastro/dados/endereco")
-    public ResponseEntity<String> cadastroDadosEndereco(@Valid @RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, @RequestHeader("fluxoId") String fluxoId) {
+    public ResponseEntity<ResponseFluxoId> cadastroDadosEndereco(@Valid @RequestBody DadosPessoaisEnderecoRequest dadosPessoaisEnderecoRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosEndereco(dadosPessoaisEnderecoRequest, fluxoId));
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class PessoaController {
     }
 
     @PostMapping("cadastro/dados/corporais")
-    public ResponseEntity<String> cadastroDadosCorporais(@Valid @RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, @RequestHeader("fluxoId") String fluxoId) {
+    public ResponseEntity<ResponseFluxoId> cadastroDadosCorporais(@Valid @RequestBody DadosPessoaisCorporaisRequest dadosPessoaisCorporaisRequest, @RequestHeader("fluxoId") String fluxoId) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosCorporais(dadosPessoaisCorporaisRequest, fluxoId));
         } catch (Exception e) {
