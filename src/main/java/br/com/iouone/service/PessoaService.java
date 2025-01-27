@@ -6,6 +6,8 @@ import br.com.iouone.entity.AtividadeFisica;
 import br.com.iouone.entity.DadosCorporais;
 import br.com.iouone.entity.Endereco;
 import br.com.iouone.entity.Pessoa;
+import br.com.iouone.exception.ExceptionCpf;
+import br.com.iouone.exception.ExceptionEmail;
 import br.com.iouone.mapper.DadosCorporaisMapper;
 import br.com.iouone.mapper.EnderecoMapper;
 import br.com.iouone.mapper.PessoaMapper;
@@ -116,7 +118,18 @@ public class PessoaService {
         pessoaRepository.save(pessoa);
     }
 
-    public ResponseFluxoId cadastroDadosLogin(LoginDTO loginDTO) {
+    public ResponseFluxoId cadastroDadosLogin(LoginDTO loginDTO) throws Exception {
+        var pessoaFindEmail = pessoaRepository.findByEmail(loginDTO.getEmail());
+        var pessoaFindCpf = pessoaRepository.findByCpf(loginDTO.getCpf());
+
+        if(pessoaFindCpf.isPresent()){
+            throw new ExceptionCpf("CPF já cadastrado!");
+        }
+
+        if(pessoaFindEmail.isPresent()){
+            throw new ExceptionEmail("Email já cadastrado!");
+        }
+
         Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
         pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
         pessoa.setFluxoId(UUID.randomUUID().toString());
@@ -146,6 +159,10 @@ public class PessoaService {
         DadosCorporais convertDadosCorporais = dadosCorporaisMapper.convertDadosCorporaisRequesttoDadosCorporais(dadosPessoaisCorporaisRequest);
         DadosCorporais saveDadosCorporais = dadosCorporaisService.saveDadosCorporais(convertDadosCorporais);
         Pessoa savePessoa = pessoaMapper.convertDadosCorporaisToPessoa(getPessoa, saveDadosCorporais, atividadeFisica);
+        PessoaDTO pessoaDTO = PessoaToDtoConverter.convert(savePessoa);
+        logger.info("Enviando mensagem para a fila com PessoaId: {}", pessoaDTO.getId());
+        rabbitTemplate.convertAndSend(RabbitConfig.PESSOA_REGISTRATION_QUEUE, pessoaDTO);
+
         return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
@@ -202,5 +219,10 @@ public class PessoaService {
         }
         return pessoa;
     }
+
+    public DadosEnderecoPessoaDTO dadosPagamentoEnderecoPessoa(String fluxoId) {
+        return pessoaRepository.buscarEnderecoPessoaPorFluxoId(fluxoId);
+    }
+
 
 }

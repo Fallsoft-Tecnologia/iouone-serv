@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v2/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v2/pessoas/cadastro/**").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/v2/pessoas/pagamento/dados-endereco/**").permitAll()
 //                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Permite preflight CORS sem autenticação
                         .anyRequest().authenticated()
                 )

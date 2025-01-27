@@ -11,6 +11,9 @@ public class PessoaRequest {
     private LocalDate dataNascimento;
     private Integer atividadeFisicaId;
 
+    public PessoaRequest() {
+    }
+
     public PessoaRequest(String cpf, String nome, String email, String senha, String celular, LocalDate dataNascimento, Integer atividadeFisicaId) {
         this.cpf = cpf;
         this.nome = nome;
