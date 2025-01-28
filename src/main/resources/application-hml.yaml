@@ -50,3 +50,7 @@ mq:
   queue:
     pessoa_registration: pessoa_registration_queue
     receiving_customer: receiving_customer_id_queue
+
+urls:
+  apis:
+    pagamento: http://pagamento-hml.iouone.com.br
