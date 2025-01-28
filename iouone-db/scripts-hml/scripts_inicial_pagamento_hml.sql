@@ -67,3 +67,9 @@ DROP COLUMN installments;
 
 INSERT INTO item_assinatura (subscription_id, name_item_assinatura, description_item_assinatura, quantity, unit_price)
 VALUES ('IouOne_Pagamento_Assinatura', 'Assinatura_Iouone', 'Unit', 1, 500.00);
+
+
+ALTER TABLE assinatura DROP FOREIGN KEY assinatura_ibfk_1;
+
+ALTER TABLE assinatura
+    ADD FOREIGN KEY (item_assinatura) REFERENCES item_assinatura (id_item_assinatura);

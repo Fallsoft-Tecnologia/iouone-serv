@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v2/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v2/pessoas/cadastro/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/v2/pessoas/pagamento/dados-endereco/**").permitAll()
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Permite preflight CORS sem autenticação
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Permite preflight CORS sem autenticação
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt()) // Mantém OAuth2
@@ -59,6 +59,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200","https://iouone.com.br","https://iouone-hml.iouone.com.br")); // 🔹 Permite requisições do Angular
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true); // ✅ Necessário se houver autenticação por cookies ou tokens
 
