@@ -39,7 +39,7 @@ public class Pessoa {
     @JoinColumn(name = "fk_endereco")
     private Endereco endereco;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_dados_corporais")
     private DadosCorporais dadosCorporais;
 

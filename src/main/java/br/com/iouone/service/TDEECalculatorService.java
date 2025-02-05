@@ -1,16 +1,21 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.CalculoTDEEDTO;
+import br.com.iouone.dto.CriarCalculoRequestDTO;
+import br.com.iouone.dto.DadosPessoaTDEEDTO;
 import br.com.iouone.dto.PessoaCalculoDTO;
 import br.com.iouone.entity.*;
 import br.com.iouone.repository.BiotipoRepository;
 import br.com.iouone.repository.CalculoTDEERepository;
 import br.com.iouone.repository.ObjetivoRepository;
 import br.com.iouone.repository.PessoaRepository;
+import com.fasterxml.jackson.core.io.schubfach.FloatToDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -21,106 +26,138 @@ public class TDEECalculatorService {
     private final CalculoTDEERepository calculoTDEERepository;
     private final ObjetivoRepository objetivoRepository;
     private final BiotipoRepository biotipoRepository;
+    private final AtividadeFisicaService atividadeFisicaService;
+    private final DadosCorporaisService dadosCorporaisService;
 
     @Autowired
     public TDEECalculatorService(PessoaService pessoaService,
                                  CalculoTDEERepository calculoTDEERepository,
-                                 ObjetivoRepository objetivoRepository, BiotipoRepository biotipoRepository) {
+                                 ObjetivoRepository objetivoRepository, BiotipoRepository biotipoRepository, AtividadeFisicaService atividadeFisicaService, DadosCorporaisService dadosCorporaisService) {
         this.pessoaService = pessoaService;
         this.calculoTDEERepository = calculoTDEERepository;
         this.objetivoRepository = objetivoRepository;
         this.biotipoRepository = biotipoRepository;
+        this.atividadeFisicaService = atividadeFisicaService;
+        this.dadosCorporaisService = dadosCorporaisService;
     }
 
-    public PessoaCalculoDTO calcularTDEE(int pessoaId, int objetivoId, int biotipoId) {
-        Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
+    public PessoaCalculoDTO calcularTDEE(Pessoa pessoa, Objetivo objetivo, Biotipo biotipo) {
+        DecimalFormat df = new DecimalFormat("####.0");
 
         DadosCorporais dadosCorporais = pessoa.getDadosCorporais();
         if (dadosCorporais == null) {
             throw new IllegalArgumentException("Dados corporais não cadastrados para esta pessoa");
         }
 
-        Objetivo objetivo = objetivoRepository.findById(objetivoId)
-                .orElseThrow(() -> new IllegalArgumentException("Objetivo não encontrado"));
-
-        Biotipo biotipo = biotipoRepository.findById(biotipoId)
-                .orElseThrow(() -> new IllegalArgumentException("Biotipo não encontrado"));
-
-        double tmb = calcularTMB(dadosCorporais,pessoaId);
+        double tmb = calcularTMB(dadosCorporais, pessoa.getDataNascimento());
         double fatorAtividade = obterFatorAtividade(pessoa.getAtividadeFisica().getAtividadeFisica());
-
         double tdee = tmb * fatorAtividade;
         double tdeeAjustado = ajustarTDEEConformeObjetivo(tdee, objetivo);
-        
-        return mapToPessoaCalculoDTO(pessoa, objetivo, biotipo, tdeeAjustado, tdeeAjustado);
+
+        return mapToPessoaCalculoDTO(pessoa, objetivo, biotipo, df.format(tdeeAjustado).replace(",", "."), df.format(tmb).replace(",", "."));
     }
 
 
     private double ajustarTDEEConformeObjetivo(double tdee, Objetivo objetivo) {
         switch (objetivo.getObjetivo().toLowerCase()) {
             case "emagrecer":
-                return tdee * 0.8;
-            case "ganhar peso":
-                return tdee * 1.2;
+                return tdee * 0.85; // Déficit moderado (15%)
+            case "emagrecer agressivo":
+                return tdee * 0.75; // Déficit agressivo (25%)
             case "manter":
+                return tdee; // Sem alteração
+            case "ganhos secos":
+                return tdee * 1.1; // Superávit moderado (10%)
+            case "ganhar agressivo":
+                return tdee * 1.25; // Superávit agressivo (25%)
             default:
-                return tdee;
+                throw new IllegalArgumentException("Objetivo desconhecido: " + objetivo.getObjetivo());
         }
     }
 
-    private double calcularTMB(DadosCorporais dadosCorporais, Integer pessoaId) {
-        Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
 
-        int idade = pessoa.getDataNascimento().until(LocalDate.now()).getYears();
+    private double calcularTMB(DadosCorporais dadosCorporais, LocalDate dataNascimento) {
+
+
+        int idade = dataNascimento.until(LocalDate.now()).getYears();
         Float altura = dadosCorporais.getAltura();
         Float pesoBD = dadosCorporais.getPesoAtual();
         Float peso = (pesoBD != null) ? pesoBD : 0;
-        
+
         return 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * idade);
     }
 
     private double obterFatorAtividade(String atividadeFisica) {
         switch (atividadeFisica.toLowerCase()) {
-            case "sedentário":
+            case "Nenhum":
                 return 1.2;
-            case "levemente ativo":
+            case "Baixo":
                 return 1.375;
-            case "moderadamente ativo":
+            case "Moderado":
                 return 1.55;
-            case "muito ativo":
+            case "Frequente":
                 return 1.725;
-            case "extremamente ativo":
-                return 1.9;
             default:
                 return 1.2;
         }
     }
 
-    public PessoaCalculoDTO criarCalculoAutomaticamente(int pessoaId, int objetivoId, int biotipoId, String dataCalculo) {
+    public CalculoTDEEDTO criarCalculoAutomaticamente(int pessoaId, CriarCalculoRequestDTO criarCalculoRequestDTO) {
         Pessoa pessoa = pessoaService.findByIdPessoa(pessoaId);
+        var dadosCorporais = dadosCorporaisService.getDadosCorporais(pessoaId);
+
+        Objetivo retonroObjetivo = objetivoRepository.findObjetivoByObjetivo(criarCalculoRequestDTO.getObjetivo());
+
+        Biotipo retornoBiotipo = biotipoRepository.findBiotipoByBiotipo(criarCalculoRequestDTO.getBiotipo());
+        if(dadosCorporais.getId() == null ){
+            pessoa.setDadosCorporais(
+                    new DadosCorporais(Float.parseFloat(criarCalculoRequestDTO.getAltura()),
+                            Float.parseFloat(criarCalculoRequestDTO.getPeso()),0F));
+        }else{
+            pessoa.setDadosCorporais(
+                    new DadosCorporais(Float.parseFloat(criarCalculoRequestDTO.getAltura()),
+                            Float.parseFloat(criarCalculoRequestDTO.getPeso()), dadosCorporais.getPesoIdeal()));
+        }
 
 
-        Objetivo objetivo = objetivoRepository.findById(objetivoId)
-                .orElseThrow(() -> new IllegalArgumentException("Objetivo não encontrado"));
+        var atividadeFisica = atividadeFisicaService.buscarAtividadeFisicaPorNome(criarCalculoRequestDTO.getNivelAtividadeFisica());
+        pessoa.setAtividadeFisica(atividadeFisica);
 
-        Biotipo biotipo = biotipoRepository.findById(biotipoId)
-                .orElseThrow(() -> new IllegalArgumentException("Biotipo não encontrado"));
+        pessoaService.createPessoa(pessoa);
 
-        PessoaCalculoDTO pessoaCalculoDTO = calcularTDEE(pessoaId, objetivoId, biotipoId);
+        PessoaCalculoDTO pessoaCalculoDTO = calcularTDEE(pessoa, retonroObjetivo, retornoBiotipo);
 
+        var idCalculo = calculoTDEERepository.buscarIdCalculoTDEE(pessoa.getId());
         CalculoTDEE calculoTDEE = new CalculoTDEE();
-        calculoTDEE.setPessoa(pessoa);
-        calculoTDEE.setTdee(pessoaCalculoDTO.getTdee());
-        calculoTDEE.setCaloriasDiarias(pessoaCalculoDTO.getCaloriasDiarias());
-        calculoTDEE.setDataCalculo(LocalDate.parse(dataCalculo));
+        if(idCalculo != null){
+            calculoTDEE.setId(idCalculo);
+            calculoTDEE.setPessoa(pessoa);
+            calculoTDEE.setTdee(Double.parseDouble(pessoaCalculoDTO.getTdee()));
+            calculoTDEE.setCaloriasDiarias(Double.parseDouble(pessoaCalculoDTO.getCaloriasDiarias()));
+            calculoTDEE.setDataCalculo(LocalDate.now());
+            calculoTDEE.setBiotipo(retornoBiotipo);
+            calculoTDEE.setObjetivo(retonroObjetivo);
+
+        }else {
+            calculoTDEE.setPessoa(pessoa);
+            calculoTDEE.setTdee(Double.parseDouble(pessoaCalculoDTO.getTdee()));
+            calculoTDEE.setCaloriasDiarias(Double.parseDouble(pessoaCalculoDTO.getCaloriasDiarias()));
+            calculoTDEE.setDataCalculo(LocalDate.now());
+            calculoTDEE.setBiotipo(retornoBiotipo);
+            calculoTDEE.setObjetivo(retonroObjetivo);
+
+        }
+
 
         calculoTDEERepository.save(calculoTDEE);
 
-        return mapToPessoaCalculoDTO(pessoa, objetivo, biotipo, pessoaCalculoDTO.getTdee(), pessoaCalculoDTO.getCaloriasDiarias());
+
+
+        return new CalculoTDEEDTO(retonroObjetivo.getObjetivo(), retornoBiotipo.getBiotipo(), pessoaCalculoDTO.getTdee(), pessoaCalculoDTO.getCaloriasDiarias());
     }
 
 
-    private PessoaCalculoDTO mapToPessoaCalculoDTO(Pessoa pessoa, Objetivo objetivo, Biotipo biotipo, double tdee, double caloriasDiarias) {
+    private PessoaCalculoDTO mapToPessoaCalculoDTO(Pessoa pessoa, Objetivo objetivo, Biotipo biotipo, String tdee, String caloriasDiarias) {
         PessoaCalculoDTO dto = new PessoaCalculoDTO();
         dto.setId(pessoa.getId().longValue());
         dto.setNome(pessoa.getNome());
@@ -128,7 +165,7 @@ public class TDEECalculatorService {
         dto.setCelular(pessoa.getCelular());
         dto.setCpf(pessoa.getCpf());
         dto.setDataNascimento(pessoa.getDataNascimento());
-       dto.setAtividadeFisica(
+        dto.setAtividadeFisica(
                 Optional.ofNullable(pessoa.getAtividadeFisica())
                         .map(atividade -> atividade.getAtividadeFisica())
                         .orElse("Atividade física não cadastrada")
@@ -154,5 +191,10 @@ public class TDEECalculatorService {
         dto.setCaloriasDiarias(caloriasDiarias);
 
         return dto;
+    }
+
+    public DadosPessoaTDEEDTO buscarDadosPessoaTDEE(Integer pessoaId) {
+        return pessoaService.dadosPessoaTDEE(pessoaId);
+
     }
 }

@@ -1,50 +1,82 @@
 package br.com.iouone.dto;
 
 public class CriarCalculoRequestDTO {
-    private int pessoaId;
-    private int objetivoId;
-    private int biotipoId;
-    private String dataCalculo;
+    private String objetivo;
+    private String biotipo;
+    private String altura;
+    private String peso;
+    private String nivelAtividadeFisica;
+    private String taxaMetabolica;
+    private String tdee;
 
     public CriarCalculoRequestDTO() {
     }
 
-    public CriarCalculoRequestDTO(int pessoaId, int objetivoId, int biotipoId, String dataCalculo) {
-        this.pessoaId = pessoaId;
-        this.objetivoId = objetivoId;
-        this.biotipoId = biotipoId;
-        this.dataCalculo = dataCalculo;
+    public CriarCalculoRequestDTO(String objetivo, String biotipo, String altura, String peso, String nivelAtividadeFisica, String taxaMetabolica, String tdee) {
+        this.objetivo = objetivo;
+        this.biotipo = biotipo;
+        this.altura = altura;
+        this.peso = peso;
+        this.nivelAtividadeFisica = nivelAtividadeFisica;
+        this.taxaMetabolica = taxaMetabolica;
+        this.tdee = tdee;
     }
 
-    public int getPessoaId() {
-        return pessoaId;
+    public String getObjetivo() {
+        return objetivo;
     }
 
-    public void setPessoaId(int pessoaId) {
-        this.pessoaId = pessoaId;
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
     }
 
-    public int getObjetivoId() {
-        return objetivoId;
+    public String getBiotipo() {
+        return biotipo;
     }
 
-    public void setObjetivoId(int objetivoId) {
-        this.objetivoId = objetivoId;
+    public void setBiotipo(String biotipo) {
+        this.biotipo = biotipo;
     }
 
-    public int getBiotipoId() {
-        return biotipoId;
+    public String getAltura() {
+        return altura;
     }
 
-    public void setBiotipoId(int biotipoId) {
-        this.biotipoId = biotipoId;
+    public void setAltura(String altura) {
+        this.altura = altura;
     }
 
-    public String getDataCalculo() {
-        return dataCalculo;
+    public String getPeso() {
+        return peso;
     }
 
-    public void setDataCalculo(String dataCalculo) {
-        this.dataCalculo = dataCalculo;
+    public void setPeso(String peso) {
+        this.peso = peso;
+    }
+
+    public String getNivelAtividadeFisica() {
+        return nivelAtividadeFisica;
+    }
+
+    public String getTaxaMetabolica() {
+        return taxaMetabolica;
+    }
+
+    public void setTaxaMetabolica(String taxaMetabolica) {
+        this.taxaMetabolica = taxaMetabolica;
+    }
+
+    public String getTdee() {
+        return tdee;
+    }
+
+    public void setTdee(String tdee) {
+        this.tdee = tdee;
+    }
+
+    public void setNivelAtividadeFisica(String nivelAtividadeFisica) {
+        this.nivelAtividadeFisica = nivelAtividadeFisica;
+
+
     }
 }

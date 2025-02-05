@@ -16,6 +16,22 @@ public class DadosCorporais {
     @Column(name = "peso_ideal")
     private Float pesoIdeal;
 
+    public DadosCorporais() {
+    }
+
+    public DadosCorporais(int id, Float altura, Float pesoAtual, Float pesoIdeal) {
+        this.id = id;
+        this.altura = altura;
+        this.pesoAtual = pesoAtual;
+        this.pesoIdeal = pesoIdeal;
+    }
+
+    public DadosCorporais(Float altura, Float pesoAtual,Float pesoIdeal) {
+        this.altura = altura;
+        this.pesoAtual = pesoAtual;
+        this.pesoIdeal = pesoIdeal;
+    }
+
     public int getId() {
         return id;
     }
