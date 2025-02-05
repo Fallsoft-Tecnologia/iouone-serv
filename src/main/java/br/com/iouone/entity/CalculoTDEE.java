@@ -25,15 +25,25 @@ public class CalculoTDEE {
     @Column(name = "data_calculo")
     private LocalDate dataCalculo;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_objetivo")
+    private Objetivo objetivo;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_biotipo")
+    private Biotipo biotipo;
+
     public CalculoTDEE() {
     }
 
-    public CalculoTDEE(int id, Pessoa pessoa, Double tdee, Double caloriasDiarias, LocalDate dataCalculo) {
+    public CalculoTDEE(int id, Pessoa pessoa, Double tdee, Double caloriasDiarias, LocalDate dataCalculo, Objetivo objetivo, Biotipo biotipo) {
         this.id = id;
         this.pessoa = pessoa;
         this.tdee = tdee;
         this.caloriasDiarias = caloriasDiarias;
         this.dataCalculo = dataCalculo;
+        this.objetivo = objetivo;
+        this.biotipo = biotipo;
     }
 
     public int getId() {
@@ -74,5 +84,21 @@ public class CalculoTDEE {
 
     public void setDataCalculo(LocalDate dataCalculo) {
         this.dataCalculo = dataCalculo;
+    }
+
+    public Objetivo getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(Objetivo objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public Biotipo getBiotipo() {
+        return biotipo;
+    }
+
+    public void setBiotipo(Biotipo biotipo) {
+        this.biotipo = biotipo;
     }
 }

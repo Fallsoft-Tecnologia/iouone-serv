@@ -99,7 +99,7 @@ public class PessoaService {
                 pessoa.setSenha(passwordEncoder.encode(pessoaRequest.getSenha()));
             }
 
-            Pessoa updatedPessoa = pessoaRepository.save(pessoa);
+            Pessoa updatedPessoa = createPessoa(pessoa);
 
             return pessoaMapper.toResponse(updatedPessoa);
         });
@@ -115,7 +115,7 @@ public class PessoaService {
     public void updateCustomerId(Integer pessoaId, String customerId) {
         Pessoa pessoa = findByIdPessoa(pessoaId);
         pessoa.setCustomerId(customerId);
-        pessoaRepository.save(pessoa);
+        createPessoa(pessoa);
     }
 
     public ResponseFluxoId cadastroDadosLogin(LoginDTO loginDTO) throws Exception {
@@ -133,14 +133,14 @@ public class PessoaService {
         Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
         pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
         pessoa.setFluxoId(UUID.randomUUID().toString());
-        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        Pessoa savePessoa = createPessoa(pessoa);
         return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
     public ResponseFluxoId cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
         Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
         Pessoa pessoa = pessoaMapper.convertDadosPessoaisToPessoa(getPessoa, dadosPessoaisPessoaRequest);
-        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        Pessoa savePessoa = createPessoa(pessoa);
         return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
@@ -149,7 +149,7 @@ public class PessoaService {
         Endereco convertEndereco = enderecoMapper.convertEnderecoResponsetoEndereco(dadosPessoaisEnderecoRequest);
         Endereco saveEndereco = enderecoService.saveEndereco(convertEndereco);
         Pessoa pessoa = pessoaMapper.convertDadosEnderecoToPessoa(getPessoa, saveEndereco);
-        Pessoa savePessoa = pessoaRepository.save(pessoa);
+        Pessoa savePessoa = createPessoa(pessoa);
         return new ResponseFluxoId(savePessoa.getFluxoId());
     }
 
@@ -159,6 +159,7 @@ public class PessoaService {
         DadosCorporais convertDadosCorporais = dadosCorporaisMapper.convertDadosCorporaisRequesttoDadosCorporais(dadosPessoaisCorporaisRequest);
         DadosCorporais saveDadosCorporais = dadosCorporaisService.saveDadosCorporais(convertDadosCorporais);
         Pessoa savePessoa = pessoaMapper.convertDadosCorporaisToPessoa(getPessoa, saveDadosCorporais, atividadeFisica);
+        createPessoa(savePessoa);
         PessoaDTO pessoaDTO = PessoaToDtoConverter.convert(savePessoa);
         logger.info("Enviando mensagem para a fila com PessoaId: {}", pessoaDTO.getId());
         rabbitTemplate.convertAndSend(RabbitConfig.PESSOA_REGISTRATION_QUEUE, pessoaDTO);
@@ -224,5 +225,13 @@ public class PessoaService {
         return pessoaRepository.buscarEnderecoPessoaPorFluxoId(fluxoId);
     }
 
+    public DadosPessoaTDEEDTO dadosPessoaTDEE(Integer pessoaId) {
+        return pessoaRepository.buscarDadosPessoaTDEE(pessoaId);
+    }
+
+
+    public Pessoa createPessoa(Pessoa pessoa){
+        return pessoaRepository.save(pessoa);
+    }
 
 }

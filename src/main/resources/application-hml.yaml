@@ -25,6 +25,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
 jwt:
   public:
     key: classpath:public.pem

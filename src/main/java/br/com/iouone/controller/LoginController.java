@@ -4,21 +4,12 @@ import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.dto.LoginRequest;
 import br.com.iouone.dto.LoginResponse;
 import br.com.iouone.exception.AssinaturaException;
-import br.com.iouone.repository.PessoaRepository;
 import br.com.iouone.service.LoginService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/v2/login")
