@@ -44,7 +44,16 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v2/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v2/pessoas/cadastro/**").permitAll()
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Permite preflight CORS sem autenticação
+                        .requestMatchers(HttpMethod.GET,"/api/v2/pessoas/pagamento/dados-endereco/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/dietas-atualizadas/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/treino-atualizado/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/exercicios-casa/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/fit-dance/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/chas/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/marmitas-fit/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/detox/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v2/cardapios-atualizados/cadastro/image/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Permite preflight CORS sem autenticação
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt()) // Mantém OAuth2
@@ -56,8 +65,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200","https://iouone.com.br","https://iouone-hml.iouone.com.br")); // 🔹 Permite requisições do Angular
+        configuration.setAllowedOrigins(List.of("http://localhost:4200","https://www.iouone.com.br","https://www.iouone-hml.iouone.com.br","http://www.iouone.com.br","http://www.iouone-hml.iouone.com.br")); // 🔹 Permite requisições do Angular
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true); // ✅ Necessário se houver autenticação por cookies ou tokens
 

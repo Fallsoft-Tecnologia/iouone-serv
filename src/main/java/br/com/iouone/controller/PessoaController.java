@@ -2,6 +2,8 @@ package br.com.iouone.controller;
 
 import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.dto.*;
+import br.com.iouone.exception.ExceptionCpf;
+import br.com.iouone.exception.ExceptionEmail;
 import br.com.iouone.service.PessoaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -62,6 +64,10 @@ public class PessoaController {
     public ResponseEntity<ResponseFluxoId> cadastroLoginPessoa(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastroDadosLogin(loginDTO));
+        } catch (ExceptionCpf eCpf) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (ExceptionEmail eEmail) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -106,5 +112,16 @@ public class PessoaController {
         }
     }
 
-
+    @GetMapping("/pagamento/dados-endereco")
+    public ResponseEntity<?> getDadosEndereco(@RequestParam("fluxoId") String fluxoId) {
+        try {
+            DadosEnderecoPessoaDTO dadosEnderecoPessoaDTO = pessoaService.dadosPagamentoEnderecoPessoa(fluxoId);
+            return ResponseEntity.ok(dadosEnderecoPessoaDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
+
+
+

@@ -79,5 +79,19 @@ public class PessoaMapper {
         return pessoa;
     }
 
+    public PessoaRequest convertPessoaToPessoaRequest(Pessoa pessoa, Integer idAtividadeFisica) {
+        PessoaRequest request = new PessoaRequest();
+
+        request.setCpf(pessoa.getCpf());
+        request.setNome(pessoa.getNome());
+        request.setEmail(pessoa.getEmail());
+        request.setSenha(pessoa.getSenha());
+        request.setCelular(pessoa.getCelular());
+        request.setDataNascimento(pessoa.getDataNascimento());
+        request.setAtividadeFisicaId(idAtividadeFisica);
+
+        return request;
+    }
+
 
 }

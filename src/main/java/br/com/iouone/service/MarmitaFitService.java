@@ -7,7 +7,9 @@ import br.com.iouone.repository.MarmitaFitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -91,4 +93,10 @@ public class MarmitaFitService {
     }
 
 
+    public void saveImage(Integer id, MultipartFile image) throws IOException {
+
+        var retornoMarmitaFit = findById(id).orElseThrow(() -> new RuntimeException("Marmita Fit nao encontrada"));
+        retornoMarmitaFit.setFoto(image.getBytes());
+        create(retornoMarmitaFit);
+    }
 }
