@@ -4,7 +4,9 @@ import br.com.iouone.entity.FitDance;
 import br.com.iouone.repository.FitDanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +46,12 @@ public class FitDanceService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public void saveImage(Integer id, MultipartFile image) throws IOException {
+
+        var retornoFitDance = findById(id).orElseThrow(() -> new RuntimeException("Fit Dance nao encontrada"));
+        retornoFitDance.setFoto(image.getBytes());
+        create(retornoFitDance);
     }
 }

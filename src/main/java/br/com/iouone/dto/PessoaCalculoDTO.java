@@ -19,8 +19,8 @@ public class PessoaCalculoDTO {
     private String objetivo;
     private String biotipo;
 
-    private double tdee;
-    private double caloriasDiarias;
+    private String tdee;
+    private String caloriasDiarias;
 
     public PessoaCalculoDTO() {
     }
@@ -121,19 +121,19 @@ public class PessoaCalculoDTO {
         this.biotipo = biotipo;
     }
 
-    public double getTdee() {
+    public String getTdee() {
         return tdee;
     }
 
-    public void setTdee(double tdee) {
+    public void setTdee(String tdee) {
         this.tdee = tdee;
     }
 
-    public double getCaloriasDiarias() {
+    public String getCaloriasDiarias() {
         return caloriasDiarias;
     }
 
-    public void setCaloriasDiarias(double caloriasDiarias) {
+    public void setCaloriasDiarias(String caloriasDiarias) {
         this.caloriasDiarias = caloriasDiarias;
     }
 }

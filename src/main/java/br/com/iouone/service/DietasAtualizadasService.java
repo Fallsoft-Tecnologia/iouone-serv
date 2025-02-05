@@ -4,7 +4,9 @@ import br.com.iouone.entity.DietasAtualizadas;
 import br.com.iouone.repository.DietasAtualizadasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,5 +42,13 @@ public class DietasAtualizadasService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public void saveImage(Integer id, MultipartFile image) throws IOException {
+        var retornoDietaAtualizada = findById(id).orElseThrow(() -> new RuntimeException("Dieta Atualizada nao encontrada"));
+        retornoDietaAtualizada.setFoto(image.getBytes());
+        create(retornoDietaAtualizada);
+
+
     }
 }

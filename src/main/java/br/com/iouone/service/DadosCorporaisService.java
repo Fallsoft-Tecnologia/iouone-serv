@@ -1,5 +1,6 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.DadosCorporaisDTO;
 import br.com.iouone.entity.DadosCorporais;
 import br.com.iouone.repository.DadosCorporaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,9 @@ public class DadosCorporaisService {
 
     public DadosCorporais saveDadosCorporais(DadosCorporais dadosCorporais) {
         return dadosCorporaisRepository.save(dadosCorporais);
+    }
+
+    public DadosCorporaisDTO getDadosCorporais(Integer idPessoa) {
+        return dadosCorporaisRepository.buscarDadosCorporais(idPessoa);
     }
 }
