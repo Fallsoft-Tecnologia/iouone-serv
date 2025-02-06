@@ -65,7 +65,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200","https://www.iouone.com.br","https://www.iouone-hml.iouone.com.br","http://www.iouone.com.br","http://www.iouone-hml.iouone.com.br")); // 🔹 Permite requisições do Angular
+        configuration.setAllowedOriginPatterns(List.of("https://*.iouone.com.br","http://*.iouone.com.br"));
+        // 🔹 Permite requisições do Angular
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         configuration.setAllowedHeaders(List.of("*"));
