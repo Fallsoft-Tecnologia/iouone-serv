@@ -1,6 +1,8 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.ReceitasResponse;
 import br.com.iouone.entity.ReceitaMarmitaFit;
+import br.com.iouone.mapper.ReceitasMapper;
 import br.com.iouone.repository.ReceitaMarmitaFitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,12 @@ public class ReceitaMarmitaFitService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public ReceitasResponse buscarReceitaMarmitaFit(Integer idMarmitaFit) {
+
+        var dadosReceitaMarmitaFit = repository.buscarReceitasMarmitaFit(idMarmitaFit);
+
+        return ReceitasMapper.receitasDtotoResponse(dadosReceitaMarmitaFit);
     }
 }

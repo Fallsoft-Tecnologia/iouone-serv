@@ -1,10 +1,13 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.DietaDetalhadaResponse;
+import br.com.iouone.dto.ItensDietaDetalhadaDTO;
 import br.com.iouone.entity.DietaDetalhada;
 import br.com.iouone.repository.DietaDetalhadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +34,8 @@ public class DietaDetalhadaService {
         if (existing.isPresent()) {
             DietaDetalhada existingDietaDetalhada = existing.get();
             existingDietaDetalhada.setAlimentacoesDiarias(dietaDetalhada.getAlimentacoesDiarias());
-            existingDietaDetalhada.setDiaSemana(dietaDetalhada.getDiaSemana());
             existingDietaDetalhada.setDietasAtualizadas(dietaDetalhada.getDietasAtualizadas());
-            existingDietaDetalhada.setIngredientes(dietaDetalhada.getIngredientes());
-            existingDietaDetalhada.setUnidadeDeMedida(dietaDetalhada.getUnidadeDeMedida());
-            existingDietaDetalhada.setQuantidade(dietaDetalhada.getQuantidade());
+            existingDietaDetalhada.setDietas(dietaDetalhada.getDietas());
             return repository.save(existingDietaDetalhada);
         }
         return null;
@@ -43,5 +43,25 @@ public class DietaDetalhadaService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public DietaDetalhadaResponse buscarDietaDetalhadasPorAlimentacao(Integer idDietaDetalhada) {
+        var dados = repository.buscarDadosDieta(idDietaDetalhada);
+        DietaDetalhadaResponse dietaDetalhadaResponse = new DietaDetalhadaResponse();
+        List<ItensDietaDetalhadaDTO> itens = new ArrayList<>();
+
+        dados.forEach(x -> {
+            if (dietaDetalhadaResponse.getTitulo() == null) {
+                dietaDetalhadaResponse.setTitulo(x.getTitulo());
+            }
+            if (dietaDetalhadaResponse.getDescricao() == null) {
+                dietaDetalhadaResponse.setDescricao(x.getDescricao());
+            }
+
+            itens.add(new ItensDietaDetalhadaDTO(x.getAlimentacaoDiaria(), x.getDieta()));
+            dietaDetalhadaResponse.setItens(itens);
+        });
+
+        return dietaDetalhadaResponse;
     }
 }

@@ -411,3 +411,19 @@ DROP PRIMARY KEY;
 
 ALTER TABLE tb_calculo_tdee
     MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+
+ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_2;
+ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_4;
+ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_5;
+
+
+ALTER TABLE dieta_detalhada
+DROP COLUMN id_dia_semana,
+DROP COLUMN id_ingredientes,
+DROP COLUMN id_unidade_de_medida,
+DROP COLUMN quantidade;
+
+
+ALTER TABLE dieta_detalhada
+    ADD COLUMN dietas TEXT;

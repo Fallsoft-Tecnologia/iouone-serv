@@ -57,4 +57,13 @@ public class ReceitaMarmitaFitController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/dados/{idMarmitaFit}")
+    public ResponseEntity<?> buscarReceitaMarmita(@PathVariable Integer idMarmitaFit) {
+        try {
+            return ResponseEntity.ok(service.buscarReceitaMarmitaFit(idMarmitaFit));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

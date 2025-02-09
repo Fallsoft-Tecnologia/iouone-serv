@@ -9,27 +9,21 @@ public class ReceitaDetox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "quantidadade")
-    private Float quantidade;
+    @ManyToOne
+    @JoinColumn(name = "id_detox")
+    private Detox detox;
 
-    @Column(name = "id_ingredientes")
-    private Integer idIngredientes;
-
-    @Column(name = "id_detox")
-    private Integer idDetox;
-
-    @Column(name = "id_unidade_de_medida")
-    private Integer idUnidadeDeMedida;
+    private String modoDePreparo;
+    private String ingredientes;
 
     public ReceitaDetox() {
     }
 
-    public ReceitaDetox(Integer id, Float quantidade, Integer idIngredientes, Integer idDetox, Integer idUnidadeDeMedida) {
+    public ReceitaDetox(Integer id, Detox detox, String modoDePreparo, String ingredientes) {
         this.id = id;
-        this.quantidade = quantidade;
-        this.idIngredientes = idIngredientes;
-        this.idDetox = idDetox;
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+        this.detox = detox;
+        this.modoDePreparo = modoDePreparo;
+        this.ingredientes = ingredientes;
     }
 
     public Integer getId() {
@@ -40,35 +34,28 @@ public class ReceitaDetox {
         this.id = id;
     }
 
-    public Float getQuantidade() {
-        return quantidade;
+
+    public Detox getDetox() {
+        return detox;
     }
 
-    public void setQuantidade(Float quantidade) {
-        this.quantidade = quantidade;
+    public void setDetox(Detox detox) {
+        this.detox = detox;
     }
 
-    public Integer getIdIngredientes() {
-        return idIngredientes;
+    public String getModoDePreparo() {
+        return modoDePreparo;
     }
 
-    public void setIdIngredientes(Integer idIngredientes) {
-        this.idIngredientes = idIngredientes;
+    public void setModoDePreparo(String modoDePreparo) {
+        this.modoDePreparo = modoDePreparo;
     }
 
-    public Integer getIdDetox() {
-        return idDetox;
+    public String getIngredientes() {
+        return ingredientes;
     }
 
-    public void setIdDetox(Integer idDetox) {
-        this.idDetox = idDetox;
-    }
-
-    public Integer getIdUnidadeDeMedida() {
-        return idUnidadeDeMedida;
-    }
-
-    public void setIdUnidadeDeMedida(Integer idUnidadeDeMedida) {
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+    public void setIngredientes(String ingredientes) {
+        this.ingredientes = ingredientes;
     }
 }
