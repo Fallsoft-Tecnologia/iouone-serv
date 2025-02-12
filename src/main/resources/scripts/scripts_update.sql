@@ -96,3 +96,11 @@ ALTER TABLE cardapio_detalhado
 ALTER TABLE cardapio_detalhado
     ADD COLUMN descricao_alimentacao_diaria TEXT;
 
+
+INSERT INTO `tb_atividade_fisica`
+(`atividade_fisica`)
+VALUES
+    ('Nenhum'),
+    ('Baixo'),
+    ('Moderado'),
+    ('Frequente');

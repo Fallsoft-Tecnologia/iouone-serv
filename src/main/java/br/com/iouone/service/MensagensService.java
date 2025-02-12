@@ -1,6 +1,7 @@
 package br.com.iouone.service;
 
 import br.com.iouone.dto.ComentarioDTO;
+import br.com.iouone.dto.Comentariov2DTO;
 import br.com.iouone.dto.MensagemDTO;
 import org.springframework.data.domain.PageRequest;
 import br.com.iouone.entity.ComentarioMensagem;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,15 +48,19 @@ public class MensagensService {
     }
 
     public Page<MensagemDTO> getAllMensagens(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("dataEnvio")));
         Page<Mensagens> mensagensPage = mensagensRepository.findAll(pageable);
 
-        return mensagensPage.map(mensagem -> new MensagemDTO(
-                mensagem.getId(),
-                mensagem.getMensagem(),
-                mensagem.getDataEnvio(),
-                mensagem.getPessoa().getNome()
-        ));
+        return mensagensPage.map(mensagem ->
+             new MensagemDTO(
+                    mensagem.getId(),
+                    mensagem.getMensagem(),
+                    mensagem.getDataEnvio(),
+                    mensagem.getPessoa().getNome(),
+                    mensagem.getComentarios()
+            )
+        );
+
     }
 
 

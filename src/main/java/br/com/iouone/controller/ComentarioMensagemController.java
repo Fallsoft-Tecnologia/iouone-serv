@@ -4,6 +4,7 @@ import br.com.iouone.config.SecurityConstants;
 import br.com.iouone.dto.ComentarioRequest;
 import br.com.iouone.service.ComentarioMensagemService;
 import br.com.iouone.service.MensagensService;
+import br.com.iouone.util.JwtUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,17 @@ public class ComentarioMensagemController {
     @Autowired
     private ComentarioMensagemService comentarioMensagemService;
 
-    @Autowired
-    private MensagensService mensagensService;
 
     @PostMapping("/{mensagemId}/comentarios")
-    public ResponseEntity<String> adicionarComentario(@Valid @PathVariable int mensagemId, @RequestBody ComentarioRequest comentarioRequest) {
+    public ResponseEntity<?> adicionarComentario(@RequestHeader("Authorization") String token ,@Valid @PathVariable int mensagemId, @RequestBody ComentarioRequest comentarioRequest) {
+        var idUsuario = JwtUtil.getUserIdFromToken(token);
+
         Integer idComentarioPai = comentarioRequest.getIdComentarioPai();
         String mensagemComentario = comentarioRequest.getMensagemComentario();
 
-        comentarioMensagemService.adicionarComentario(mensagemId, mensagemComentario, idComentarioPai);
+        var comentario = comentarioMensagemService.adicionarComentario(mensagemId, mensagemComentario, idComentarioPai,Integer.parseInt(idUsuario));
 
-        return ResponseEntity.ok("Comentário adicionado com sucesso!");
+        return ResponseEntity.ok(comentario);
     }
 
 }

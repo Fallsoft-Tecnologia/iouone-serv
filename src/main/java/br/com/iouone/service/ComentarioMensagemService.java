@@ -1,5 +1,6 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.Comentariov2DTO;
 import br.com.iouone.entity.ComentarioMensagem;
 import br.com.iouone.entity.Mensagens;
 import br.com.iouone.entity.Pessoa;
@@ -15,13 +16,20 @@ import java.util.Optional;
 @Service
 public class ComentarioMensagemService {
 
-    @Autowired
-    private MensagensRepository mensagemRepository;
+    private final MensagensRepository mensagemRepository;
+
+    private final ComentarioMensagemRepository comentarioMensagemRepository;
+
+    private final PessoaService pessoaService;
 
     @Autowired
-    private ComentarioMensagemRepository comentarioMensagemRepository;
+    public ComentarioMensagemService(MensagensRepository mensagemRepository, ComentarioMensagemRepository comentarioMensagemRepository, PessoaService pessoaService) {
+        this.mensagemRepository = mensagemRepository;
+        this.comentarioMensagemRepository = comentarioMensagemRepository;
+        this.pessoaService = pessoaService;
+    }
 
-    public void adicionarComentario(int idMensagem, String mensagemComentario, Integer idComentarioPai) {
+    public Comentariov2DTO adicionarComentario(int idMensagem, String mensagemComentario, Integer idComentarioPai, Integer idUsuario) {
         Optional<Mensagens> mensagemOpt = mensagemRepository.findById(idMensagem);
         if (mensagemOpt.isPresent()) {
             Mensagens mensagem = mensagemOpt.get();
@@ -32,7 +40,7 @@ public class ComentarioMensagemService {
 
             novoComentario.setDataEnvio(LocalDateTime.now());
 
-            Pessoa pessoa = mensagem.getPessoa();
+            Pessoa pessoa = pessoaService.findByIdPessoa(idUsuario);
             novoComentario.setPessoa(pessoa);
 
             if (idComentarioPai != null) {
@@ -45,9 +53,10 @@ public class ComentarioMensagemService {
                 }
             }
 
-            comentarioMensagemRepository.save(novoComentario);
+            var comentario = comentarioMensagemRepository.save(novoComentario);
+            return new Comentariov2DTO(comentario.getId(),mensagemComentario,pessoa.getNome());
         } else {
-            System.out.println("Mensagem não encontrada");
+            return new Comentariov2DTO();
         }
     }
 
