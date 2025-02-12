@@ -14,20 +14,16 @@ public class ChaDesinchar {
 
     private String descricao;
 
-    @Column(name = "modo_de_preparo")
-    private String modoDePreparo;
-
 
     private byte[] foto;
 
     public ChaDesinchar() {
     }
 
-    public ChaDesinchar(Integer id, String nome, String descricao, String modoDePreparo, byte[] foto) {
+    public ChaDesinchar(Integer id, String nome, String descricao, byte[] foto) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.modoDePreparo = modoDePreparo;
         this.foto = foto;
     }
 
@@ -55,13 +51,6 @@ public class ChaDesinchar {
         this.descricao = descricao;
     }
 
-    public String getModoDePreparo() {
-        return modoDePreparo;
-    }
-
-    public void setModoDePreparo(String modoDePreparo) {
-        this.modoDePreparo = modoDePreparo;
-    }
 
     public byte[] getFoto() {
         return foto;

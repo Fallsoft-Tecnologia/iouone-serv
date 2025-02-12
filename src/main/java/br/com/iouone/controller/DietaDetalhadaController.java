@@ -51,4 +51,13 @@ public class DietaDetalhadaController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/dados/{idDietaAtualizada}")
+    public ResponseEntity<?> buscarDietaDetalhada(@PathVariable Integer idDietaAtualizada) {
+        try {
+            return ResponseEntity.ok(service.buscarDietaDetalhadasPorAlimentacao(idDietaAtualizada));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

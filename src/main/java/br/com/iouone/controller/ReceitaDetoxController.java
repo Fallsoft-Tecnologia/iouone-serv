@@ -57,4 +57,13 @@ public class ReceitaDetoxController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/dados/{idDetox}")
+    public ResponseEntity<?> buscarReceitaMarmita(@PathVariable Integer idDetox) {
+        try {
+            return ResponseEntity.ok(service.buscarReceitaDetox(idDetox));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

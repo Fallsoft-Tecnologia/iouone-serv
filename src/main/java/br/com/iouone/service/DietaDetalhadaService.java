@@ -1,10 +1,14 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.PlanoDiarioResponse;
+import br.com.iouone.dto.ItensDietaDetalhadaDTO;
 import br.com.iouone.entity.DietaDetalhada;
+import br.com.iouone.mapper.PlanosDiariosMapper;
 import br.com.iouone.repository.DietaDetalhadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +35,8 @@ public class DietaDetalhadaService {
         if (existing.isPresent()) {
             DietaDetalhada existingDietaDetalhada = existing.get();
             existingDietaDetalhada.setAlimentacoesDiarias(dietaDetalhada.getAlimentacoesDiarias());
-            existingDietaDetalhada.setDiaSemana(dietaDetalhada.getDiaSemana());
             existingDietaDetalhada.setDietasAtualizadas(dietaDetalhada.getDietasAtualizadas());
-            existingDietaDetalhada.setIngredientes(dietaDetalhada.getIngredientes());
-            existingDietaDetalhada.setUnidadeDeMedida(dietaDetalhada.getUnidadeDeMedida());
-            existingDietaDetalhada.setQuantidade(dietaDetalhada.getQuantidade());
+            existingDietaDetalhada.setDietas(dietaDetalhada.getDietas());
             return repository.save(existingDietaDetalhada);
         }
         return null;
@@ -43,5 +44,10 @@ public class DietaDetalhadaService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public PlanoDiarioResponse buscarDietaDetalhadasPorAlimentacao(Integer idDietaDetalhada) {
+        var dados = repository.buscarDadosDieta(idDietaDetalhada);
+        return PlanosDiariosMapper.dtoToPlanoDiarioResponse(dados);
     }
 }

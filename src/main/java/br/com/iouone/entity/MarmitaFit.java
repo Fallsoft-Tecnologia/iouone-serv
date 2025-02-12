@@ -11,7 +11,6 @@ public class MarmitaFit {
 
     private String nome;
     private String descricao;
-    private String modoDePreparo;
 
 
     private byte[] foto;
@@ -19,11 +18,10 @@ public class MarmitaFit {
     public MarmitaFit() {
     }
 
-    public MarmitaFit(Integer id, String nome, String descricao, String modoDePreparo, byte[] foto) {
+    public MarmitaFit(Integer id, String nome, String descricao, byte[] foto) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.modoDePreparo = modoDePreparo;
         this.foto = foto;
     }
 
@@ -49,14 +47,6 @@ public class MarmitaFit {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getModoDePreparo() {
-        return modoDePreparo;
-    }
-
-    public void setModoDePreparo(String modoDePreparo) {
-        this.modoDePreparo = modoDePreparo;
     }
 
     public byte[] getFoto() {
