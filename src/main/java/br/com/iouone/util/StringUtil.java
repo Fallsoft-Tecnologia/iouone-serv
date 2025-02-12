@@ -12,4 +12,16 @@ public class StringUtil {
         input = input.replaceAll("\n", "").trim();
         return Arrays.asList(input.split(";"));
     }
+
+
+    public static String pegarNomeSobrenome(String nome) {
+        String[] partes = nome.split(" ");
+        if (partes.length >= 2) {
+            return partes[0] + " " + partes[1];
+        } else {
+            return nome;
+        }
+
+
+    }
 }

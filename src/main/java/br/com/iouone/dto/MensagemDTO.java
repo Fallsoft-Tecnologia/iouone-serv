@@ -1,10 +1,12 @@
 package br.com.iouone.dto;
 
+import br.com.iouone.entity.ComentarioMensagem;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MensagemDTO {
     private int id;
@@ -15,11 +17,14 @@ public class MensagemDTO {
     @NotBlank(message = "O nome da pessoa é obrigatório.")
     private String nomePessoa;
 
-    public MensagemDTO(int id, String mensagem, LocalDateTime dataEnvio, String nomePessoa) {
+    private List<ComentarioMensagem> comentariov2DTO;
+
+    public MensagemDTO(int id, String mensagem, LocalDateTime dataEnvio, String nomePessoa, List<ComentarioMensagem>  comentariov2DTO) {
         this.id = id;
         this.mensagem = mensagem;
         this.dataEnvio = dataEnvio;
         this.nomePessoa = nomePessoa;
+        this.comentariov2DTO = comentariov2DTO;
     }
 
     // Getters e Setters
@@ -53,5 +58,13 @@ public class MensagemDTO {
 
     public void setNomePessoa(String nomePessoa) {
         this.nomePessoa = nomePessoa;
+    }
+
+    public List<ComentarioMensagem> getComentariov2DTO() {
+        return comentariov2DTO;
+    }
+
+    public void setComentariov2DTO(List<ComentarioMensagem> comentariov2DTO) {
+        this.comentariov2DTO = comentariov2DTO;
     }
 }
