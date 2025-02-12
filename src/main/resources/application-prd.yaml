@@ -43,12 +43,12 @@ springdoc:
     urls:
       - url: /v3/api-docs
         name: IOUONE API
-    server-url: http://plataforma-prd.iouone.com.br
+    server-url: https://plataforma-prd.iouone.com.br
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
 
 mq:
   queue:
@@ -57,4 +57,4 @@ mq:
 
 urls:
   apis:
-    pagamento: http://pagamento-prd.iouone.com.br
+    pagamento: https://pagamento-prd.iouone.com.br
