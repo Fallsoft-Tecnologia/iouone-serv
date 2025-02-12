@@ -8,27 +8,21 @@ public class ReceitasChaDesinchar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "id_cha_desinchar")
+    private ChaDesinchar chaDesinchar;
 
-    private Float quantidade;
-
-    @Column(name = "id_ingredientes")
-    private Integer idIngredientes;
-
-    @Column(name = "id_cha_desinchar")
-    private Integer idChaDesinchar;
-
-    @Column(name = "id_unidade_de_medida")
-    private Integer idUnidadeDeMedida;
+    private String modoDePreparo;
+    private String ingredientes;
 
     public ReceitasChaDesinchar() {
     }
 
-    public ReceitasChaDesinchar(Integer id, Float quantidade, Integer idIngredientes, Integer idChaDesinchar, Integer idUnidadeDeMedida) {
+    public ReceitasChaDesinchar(Integer id, ChaDesinchar chaDesinchar, String modoDePreparo, String ingredientes) {
         this.id = id;
-        this.quantidade = quantidade;
-        this.idIngredientes = idIngredientes;
-        this.idChaDesinchar = idChaDesinchar;
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+        this.chaDesinchar = chaDesinchar;
+        this.modoDePreparo = modoDePreparo;
+        this.ingredientes = ingredientes;
     }
 
     public Integer getId() {
@@ -39,35 +33,27 @@ public class ReceitasChaDesinchar {
         this.id = id;
     }
 
-    public Float getQuantidade() {
-        return quantidade;
+    public ChaDesinchar getChaDesinchar() {
+        return chaDesinchar;
     }
 
-    public void setQuantidade(Float quantidade) {
-        this.quantidade = quantidade;
+    public void setChaDesinchar(ChaDesinchar chaDesinchar) {
+        this.chaDesinchar = chaDesinchar;
     }
 
-    public Integer getIdIngredientes() {
-        return idIngredientes;
+    public String getModoDePreparo() {
+        return modoDePreparo;
     }
 
-    public void setIdIngredientes(Integer idIngredientes) {
-        this.idIngredientes = idIngredientes;
+    public void setModoDePreparo(String modoDePreparo) {
+        this.modoDePreparo = modoDePreparo;
     }
 
-    public Integer getIdChaDesinchar() {
-        return idChaDesinchar;
+    public String getIngredientes() {
+        return ingredientes;
     }
 
-    public void setIdChaDesinchar(Integer idChaDesinchar) {
-        this.idChaDesinchar = idChaDesinchar;
-    }
-
-    public Integer getIdUnidadeDeMedida() {
-        return idUnidadeDeMedida;
-    }
-
-    public void setIdUnidadeDeMedida(Integer idUnidadeDeMedida) {
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
+    public void setIngredientes(String ingredientes) {
+        this.ingredientes = ingredientes;
     }
 }

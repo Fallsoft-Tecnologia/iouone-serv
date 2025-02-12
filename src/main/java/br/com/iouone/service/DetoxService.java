@@ -34,7 +34,6 @@ public class DetoxService {
             Detox existingDetox = existing.get();
             existingDetox.setNome(detox.getNome());
             existingDetox.setDescricao(detox.getDescricao());
-            existingDetox.setModoDePreparo(detox.getModoDePreparo());
             existingDetox.setFoto(detox.getFoto());
             return repository.save(existingDetox);
         }
