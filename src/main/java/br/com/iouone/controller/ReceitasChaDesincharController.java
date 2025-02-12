@@ -49,4 +49,13 @@ public class ReceitasChaDesincharController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/dados/{idChaDesinchar}")
+    public ResponseEntity<?> buscarReceitaCha(@PathVariable Integer idChaDesinchar) {
+        try {
+            return ResponseEntity.ok(service.buscarReceitaCha(idChaDesinchar));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

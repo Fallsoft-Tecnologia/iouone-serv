@@ -1,6 +1,8 @@
 package br.com.iouone.service;
 
+import br.com.iouone.dto.ReceitasResponse;
 import br.com.iouone.entity.ReceitasChaDesinchar;
+import br.com.iouone.mapper.ReceitasMapper;
 import br.com.iouone.repository.ReceitasChaDesincharRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,11 @@ public class ReceitasChaDesincharService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public ReceitasResponse buscarReceitaCha(Integer idChaDesinchar) {
+        var dadosReceitaChaDesinchar = repository.buscarReceitasChaDesinchar(idChaDesinchar);
+
+        return ReceitasMapper.receitasDtotoResponse(dadosReceitaChaDesinchar);
     }
 }

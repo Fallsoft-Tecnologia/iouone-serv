@@ -39,7 +39,6 @@ public class MarmitaFitService {
             MarmitaFit updatedMarmitaFit = existing.get();
             updatedMarmitaFit.setNome(marmitaFit.getNome());
             updatedMarmitaFit.setDescricao(marmitaFit.getDescricao());
-            updatedMarmitaFit.setModoDePreparo(marmitaFit.getModoDePreparo());
             updatedMarmitaFit.setFoto(marmitaFit.getFoto());
             return repository.save(updatedMarmitaFit);
         }

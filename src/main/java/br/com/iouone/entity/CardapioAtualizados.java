@@ -8,11 +8,8 @@ public class CardapioAtualizados {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nome;
     private String descricao;
-
-
     private byte[] foto;
 
     public CardapioAtualizados() {

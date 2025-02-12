@@ -11,6 +11,7 @@ import br.com.iouone.repository.PessoaRepository;
 import br.com.iouone.service.MensagensService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -68,13 +69,13 @@ public class MensagensController {
         return ResponseEntity.ok(mensagens);
     }
 
-    @GetMapping("/comentarios")
-    public ResponseEntity<?> obterComentariosPorMensagem(@RequestBody MensagemRequestDTO mensagemIdRequest,
+    @GetMapping("/comentarios/{mensagemId}")
+    public ResponseEntity<?> obterComentariosPorMensagem(@PathVariable("mensagemId") Integer mensagemId,
                                                          @RequestParam int page,
                                                          @RequestParam int size) {
         try {
             List<ComentarioDTO> comentarios = mensagensService.obterComentariosIniciaisPorMensagem(
-                    mensagemIdRequest.getMensagemId(),
+                    mensagemId,
                     page,
                     size
             );

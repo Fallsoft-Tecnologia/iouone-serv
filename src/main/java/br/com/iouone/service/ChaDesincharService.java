@@ -34,7 +34,6 @@ public class ChaDesincharService {
             ChaDesinchar cha = existing.get();
             cha.setNome(chaDesinchar.getNome());
             cha.setDescricao(chaDesinchar.getDescricao());
-            cha.setModoDePreparo(chaDesinchar.getModoDePreparo());
             cha.setFoto(chaDesinchar.getFoto());
             return repository.save(cha);
         }
