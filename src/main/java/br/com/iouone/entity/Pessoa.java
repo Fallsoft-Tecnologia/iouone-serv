@@ -1,6 +1,7 @@
 package br.com.iouone.entity;
 
 import br.com.iouone.dto.LoginRequest;
+import br.com.iouone.util.StringUtil;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -61,7 +62,7 @@ public class Pessoa {
     }
 
     public String getNome() {
-        return nome;
+        return StringUtil.pegarNomeSobrenome(nome);
     }
 
     public void setNome(String nome) {
