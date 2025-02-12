@@ -75,4 +75,24 @@ ALTER TABLE receita_detox
 
 
 
+ALTER TABLE cardapio_detalhado DROP CONSTRAINT cardapio_detalhado_ibfk_3;
+ALTER TABLE cardapio_detalhado DROP CONSTRAINT cardapio_detalhado_ibfk_4;
+ALTER TABLE cardapio_detalhado DROP CONSTRAINT cardapio_detalhado_ibfk_5;
+
+-- Remover as colunas
+ALTER TABLE cardapio_detalhado
+DROP COLUMN id_dia_semana,
+DROP COLUMN id_ingredientes,
+DROP COLUMN id_unidade_de_medida,
+DROP COLUMN quantidade;
+
+-- Adicionar a nova coluna dietas do tipo TEXT
+ALTER TABLE cardapio_detalhado
+    ADD COLUMN cardapios TEXT;
+
+ALTER TABLE cardapio_detalhado
+    ADD COLUMN modo_de_preparo TEXT;
+
+ALTER TABLE cardapio_detalhado
+    ADD COLUMN descricao_alimentacao_diaria TEXT;
 

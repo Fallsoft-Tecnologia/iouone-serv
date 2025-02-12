@@ -9,34 +9,32 @@ public class CardapioDetalhado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Float quantidade;
+    @ManyToOne
+    @JoinColumn(name = "id_cardapio_atualizados")
+    private CardapioAtualizados cardapioAtualizados;
 
-    @Column(name = "id_cardapio_atualizados")
-    private Integer idCardapioAtualizados;
+    @ManyToOne
+    @JoinColumn(name = "id_alimentacoes_diarias")
+    private AlimentacoesDiarias alimentacoesDiarias;
 
-    @Column(name = "id_alimentacoes_diarias")
-    private Integer idAlimentacoesDiarias;
+    private String cardapios;
 
-    @Column(name = "id_dia_semana")
-    private Integer idDiaSemana;
+    private String modoDePreparo;
 
-    @Column(name = "id_unidade_de_medida")
-    private Integer idUnidadeDeMedida;
+    private String descricaoAlimentacaoDiaria;
 
-    @Column(name = "id_ingredientes")
-    private Integer idIngredientes;
 
     public CardapioDetalhado() {
     }
 
-    public CardapioDetalhado(Integer id, Float quantidade, Integer idCardapioAtualizados, Integer idAlimentacoesDiarias, Integer idDiaSemana, Integer idUnidadeDeMedida, Integer idIngredientes) {
+    public CardapioDetalhado(Integer id, CardapioAtualizados cardapioAtualizados, AlimentacoesDiarias alimentacoesDiarias,
+                             String cardapios, String modoDePreparo, String descricaoAlimentacaoDiaria) {
         this.id = id;
-        this.quantidade = quantidade;
-        this.idCardapioAtualizados = idCardapioAtualizados;
-        this.idAlimentacoesDiarias = idAlimentacoesDiarias;
-        this.idDiaSemana = idDiaSemana;
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
-        this.idIngredientes = idIngredientes;
+        this.cardapioAtualizados = cardapioAtualizados;
+        this.alimentacoesDiarias = alimentacoesDiarias;
+        this.cardapios = cardapios;
+        this.modoDePreparo = modoDePreparo;
+        this.descricaoAlimentacaoDiaria = descricaoAlimentacaoDiaria;
     }
 
     public Integer getId() {
@@ -47,52 +45,44 @@ public class CardapioDetalhado {
         this.id = id;
     }
 
-    public Float getQuantidade() {
-        return quantidade;
+    public CardapioAtualizados getCardapioAtualizados() {
+        return cardapioAtualizados;
     }
 
-    public void setQuantidade(Float quantidade) {
-        this.quantidade = quantidade;
+    public void setCardapioAtualizados(CardapioAtualizados cardapioAtualizados) {
+        this.cardapioAtualizados = cardapioAtualizados;
     }
 
-    public Integer getIdCardapioAtualizados() {
-        return idCardapioAtualizados;
+    public AlimentacoesDiarias getAlimentacoesDiarias() {
+        return alimentacoesDiarias;
     }
 
-    public void setIdCardapioAtualizados(Integer idCardapioAtualizados) {
-        this.idCardapioAtualizados = idCardapioAtualizados;
+    public void setAlimentacoesDiarias(AlimentacoesDiarias alimentacoesDiarias) {
+        this.alimentacoesDiarias = alimentacoesDiarias;
     }
 
-    public Integer getIdAlimentacoesDiarias() {
-        return idAlimentacoesDiarias;
+    public String getCardapios() {
+        return cardapios;
     }
 
-    public void setIdAlimentacoesDiarias(Integer idAlimentacoesDiarias) {
-        this.idAlimentacoesDiarias = idAlimentacoesDiarias;
+    public void setCardapios(String cardapios) {
+        this.cardapios = cardapios;
     }
 
-    public Integer getIdDiaSemana() {
-        return idDiaSemana;
+    public String getModoDePreparo() {
+        return modoDePreparo;
     }
 
-    public void setIdDiaSemana(Integer idDiaSemana) {
-        this.idDiaSemana = idDiaSemana;
+    public void setModoDePreparo(String modoDePreparo) {
+        this.modoDePreparo = modoDePreparo;
     }
 
-    public Integer getIdUnidadeDeMedida() {
-        return idUnidadeDeMedida;
+    public String getDescricaoAlimentacaoDiaria() {
+        return descricaoAlimentacaoDiaria;
     }
 
-    public void setIdUnidadeDeMedida(Integer idUnidadeDeMedida) {
-        this.idUnidadeDeMedida = idUnidadeDeMedida;
-    }
-
-    public Integer getIdIngredientes() {
-        return idIngredientes;
-    }
-
-    public void setIdIngredientes(Integer idIngredientes) {
-        this.idIngredientes = idIngredientes;
+    public void setDescricaoAlimentacaoDiaria(String descricaoAlimentacaoDiaria) {
+        this.descricaoAlimentacaoDiaria = descricaoAlimentacaoDiaria;
     }
 }
 

@@ -2,17 +2,17 @@ package br.com.iouone.dto;
 
 import java.util.List;
 
-public class DietaDetalhadaResponse {
+public class PlanoDiarioResponse {
 
 
     private String titulo;
     private String descricao;
     private List<ItensDietaDetalhadaDTO> itens;
 
-    public DietaDetalhadaResponse() {
+    public PlanoDiarioResponse() {
     }
 
-    public DietaDetalhadaResponse(String titulo, String descricao, List<ItensDietaDetalhadaDTO> itens) {
+    public PlanoDiarioResponse(String titulo, String descricao, List<ItensDietaDetalhadaDTO> itens) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.itens = itens;

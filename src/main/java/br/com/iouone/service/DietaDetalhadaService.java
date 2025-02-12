@@ -1,8 +1,9 @@
 package br.com.iouone.service;
 
-import br.com.iouone.dto.DietaDetalhadaResponse;
+import br.com.iouone.dto.PlanoDiarioResponse;
 import br.com.iouone.dto.ItensDietaDetalhadaDTO;
 import br.com.iouone.entity.DietaDetalhada;
+import br.com.iouone.mapper.PlanosDiariosMapper;
 import br.com.iouone.repository.DietaDetalhadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,23 +46,8 @@ public class DietaDetalhadaService {
         repository.deleteById(id);
     }
 
-    public DietaDetalhadaResponse buscarDietaDetalhadasPorAlimentacao(Integer idDietaDetalhada) {
+    public PlanoDiarioResponse buscarDietaDetalhadasPorAlimentacao(Integer idDietaDetalhada) {
         var dados = repository.buscarDadosDieta(idDietaDetalhada);
-        DietaDetalhadaResponse dietaDetalhadaResponse = new DietaDetalhadaResponse();
-        List<ItensDietaDetalhadaDTO> itens = new ArrayList<>();
-
-        dados.forEach(x -> {
-            if (dietaDetalhadaResponse.getTitulo() == null) {
-                dietaDetalhadaResponse.setTitulo(x.getTitulo());
-            }
-            if (dietaDetalhadaResponse.getDescricao() == null) {
-                dietaDetalhadaResponse.setDescricao(x.getDescricao());
-            }
-
-            itens.add(new ItensDietaDetalhadaDTO(x.getAlimentacaoDiaria(), x.getDieta()));
-            dietaDetalhadaResponse.setItens(itens);
-        });
-
-        return dietaDetalhadaResponse;
+        return PlanosDiariosMapper.dtoToPlanoDiarioResponse(dados);
     }
 }

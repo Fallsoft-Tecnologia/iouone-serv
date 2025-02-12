@@ -1,20 +1,20 @@
 package br.com.iouone.dto;
 
-public class DietaDetalhadaDTO {
+public class PlanoDiarioDTO {
 
     private String titulo;
     private String descricao;
     private String alimentacaoDiaria;
-    private String dieta;
+    private String descricaoAlimentacaoDiaria;
 
-    public DietaDetalhadaDTO() {
+    public PlanoDiarioDTO() {
     }
 
-    public DietaDetalhadaDTO(String titulo, String descricao, String alimentacaoDiaria, String dieta) {
+    public PlanoDiarioDTO(String titulo, String descricao, String alimentacaoDiaria, String descricaoAlimentacaoDiaria) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.alimentacaoDiaria = alimentacaoDiaria;
-        this.dieta = dieta;
+        this.descricaoAlimentacaoDiaria = descricaoAlimentacaoDiaria;
     }
 
     public String getTitulo() {
@@ -41,11 +41,11 @@ public class DietaDetalhadaDTO {
         this.alimentacaoDiaria = alimentacaoDiaria;
     }
 
-    public String getDieta() {
-        return dieta;
+    public String getDescricaoAlimentacaoDiaria() {
+        return descricaoAlimentacaoDiaria;
     }
 
-    public void setDieta(String dieta) {
-        this.dieta = dieta;
+    public void setDescricaoAlimentacaoDiaria(String descricaoAlimentacaoDiaria) {
+        this.descricaoAlimentacaoDiaria = descricaoAlimentacaoDiaria;
     }
 }
