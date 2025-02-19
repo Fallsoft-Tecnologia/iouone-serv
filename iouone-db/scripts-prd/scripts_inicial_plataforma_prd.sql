@@ -366,13 +366,13 @@ ALTER TABLE treino_completo
 
 
 INSERT INTO tb_atividade_fisica (id, atividade_fisica)
-VALUES (1, 'test1');
+VALUES (1, 'Nenhum');
 INSERT INTO tb_atividade_fisica (id, atividade_fisica)
-VALUES (2, 'test2');
+VALUES (2, 'Baixo');
 INSERT INTO tb_atividade_fisica (id, atividade_fisica)
-VALUES (3, 'test3');
+VALUES (3, 'Moderado');
 INSERT INTO tb_atividade_fisica (id, atividade_fisica)
-VALUES (4, 'test4');
+VALUES (4, 'Frequente');
 
 INSERT INTO tb_biotipo (id, biotipo)
 VALUES (1, 'Ectomorfo');
@@ -387,6 +387,33 @@ INSERT INTO tb_objetivo (id, objetivo)
 VALUES (2, 'Ganho de Massa Muscular');
 INSERT INTO tb_objetivo (id, objetivo)
 VALUES (3, 'Manutenção');
+
+
+ALTER TABLE dietas_atualizadas MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE treino_atualizado MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE exercicio_em_casa MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE fit_dance MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE cha_desinchar MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE marmita_fit MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE detox MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE cardapio_atualizados MODIFY COLUMN foto LONGBLOB;
+
+
+ALTER TABLE tb_calculo_tdee
+DROP PRIMARY KEY;
+
+ALTER TABLE tb_calculo_tdee
+    MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+
+
 
 
 

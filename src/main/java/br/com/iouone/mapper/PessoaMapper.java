@@ -61,6 +61,17 @@ public class PessoaMapper {
         return pessoa;
     }
 
+    public Pessoa convertLoginToPessoaWithCpf(String cpf, String email, Integer id, String celular, String nome) {
+        Pessoa pessoa = new Pessoa();
+        pessoa.setId(id);
+        pessoa.setEmail(email);
+        pessoa.setCelular(celular);
+        pessoa.setNome(nome);
+        pessoa.setCpf(cpf);
+
+        return pessoa;
+    }
+
     public Pessoa convertDadosPessoaisToPessoa(Pessoa pessoa, DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest) {
         pessoa.setNome(dadosPessoaisPessoaRequest.getNome());
         pessoa.setDataNascimento(dadosPessoaisPessoaRequest.getDataNascimento());

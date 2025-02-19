@@ -97,10 +97,22 @@ ALTER TABLE cardapio_detalhado
     ADD COLUMN descricao_alimentacao_diaria TEXT;
 
 
-INSERT INTO `tb_atividade_fisica`
-(`atividade_fisica`)
+INSERT INTO `iouone_prd`.`tb_objetivo`
+(`id`, `objetivo`)
 VALUES
-    ('Nenhum'),
-    ('Baixo'),
-    ('Moderado'),
-    ('Frequente');
+    (1, 'Emagrecer'),
+    (2, 'Emagrecer agressivo'),
+    (3, 'Manter'),
+    (4, 'Ganhos secos'),
+    (5, 'Ganhar agressivo');
+
+INSERT INTO `iouone_prd`.`alimentacoes_diarias`
+(`id`, `alimentacao_diaria`)
+VALUES
+    (1, 'Café da manhã'),
+    (2, 'Lanche da manhã'),
+    (3, 'Almoço'),
+    (4, 'Lanche da tarde'),
+    (5, 'Jantar'),
+    (6, 'Ceia');
+
