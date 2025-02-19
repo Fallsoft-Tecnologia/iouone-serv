@@ -8,6 +8,7 @@ import br.com.iouone.entity.Endereco;
 import br.com.iouone.entity.Pessoa;
 import br.com.iouone.exception.ExceptionCpf;
 import br.com.iouone.exception.ExceptionEmail;
+import br.com.iouone.feign.PagamentoFeignClient;
 import br.com.iouone.mapper.DadosCorporaisMapper;
 import br.com.iouone.mapper.EnderecoMapper;
 import br.com.iouone.mapper.PessoaMapper;
@@ -58,6 +59,9 @@ public class PessoaService {
 
     @Autowired
     private DadosCorporaisMapper dadosCorporaisMapper;
+
+    @Autowired
+    private PagamentoFeignClient pagamentoFeignClient;
 
     public PessoaResponse savePessoa(PessoaRequest pessoaRequest) {
         Pessoa pessoa = pessoaMapper.toEntity(pessoaRequest);
@@ -119,23 +123,40 @@ public class PessoaService {
     }
 
     public ResponseFluxoId cadastroDadosLogin(LoginDTO loginDTO) throws Exception {
-        var pessoaFindEmail = pessoaRepository.findByEmail(loginDTO.getEmail());
         var pessoaFindCpf = pessoaRepository.findByCpf(loginDTO.getCpf());
 
-        if(pessoaFindCpf.isPresent()){
-            throw new ExceptionCpf("CPF já cadastrado!");
+        if (pessoaFindCpf.isPresent()) {
+            var custumerId = pessoaFindCpf.get().getCustomerId();
+            if (!custumerId.isEmpty()) {
+                var statusPagamento = pagamentoFeignClient.statusAssinatura(custumerId);
+                if (statusPagamento) {
+                    throw new ExceptionCpf("Pessoa já cadastrado!");
+                }
+            }
+            var pessoaFindEmail = pessoaRepository.findByEmail(loginDTO.getEmail());
+
+            if (pessoaFindEmail.isPresent()) {
+                if (!pessoaFindEmail.get().getId().equals(pessoaFindCpf.get().getId())) {
+                    throw new ExceptionEmail("Pessoa já cadastrada");
+                }
+            }
+            Pessoa pessoa = pessoaMapper.convertLoginToPessoaWithCpf(pessoaFindCpf.get().getCpf(),
+                    pessoaFindEmail.get().getEmail(), pessoaFindCpf.get().getId(), pessoaFindCpf.get().getCelular(),
+                    pessoaFindCpf.get().getNome());
+            pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
+            pessoa.setFluxoId(UUID.randomUUID().toString());
+            Pessoa savePessoa = createPessoa(pessoa);
+            return new ResponseFluxoId(savePessoa.getFluxoId());
+        } else {
+            Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
+            pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
+            pessoa.setFluxoId(UUID.randomUUID().toString());
+            Pessoa savePessoa = createPessoa(pessoa);
+            return new ResponseFluxoId(savePessoa.getFluxoId());
         }
 
-        if(pessoaFindEmail.isPresent()){
-            throw new ExceptionEmail("Email já cadastrado!");
-        }
-
-        Pessoa pessoa = pessoaMapper.convertLoginToPessoa(loginDTO);
-        pessoa.setSenha(passwordEncoder.encode(loginDTO.getPassword()));
-        pessoa.setFluxoId(UUID.randomUUID().toString());
-        Pessoa savePessoa = createPessoa(pessoa);
-        return new ResponseFluxoId(savePessoa.getFluxoId());
     }
+
 
     public ResponseFluxoId cadastroDadosPessoais(DadosPessoaisPessoaRequest dadosPessoaisPessoaRequest, String fluxoId) {
         Pessoa getPessoa = findPessoaByFluxoId(fluxoId);
@@ -230,7 +251,7 @@ public class PessoaService {
     }
 
 
-    public Pessoa createPessoa(Pessoa pessoa){
+    public Pessoa createPessoa(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
     }
 
