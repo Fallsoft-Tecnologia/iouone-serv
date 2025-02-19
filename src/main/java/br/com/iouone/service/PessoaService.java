@@ -127,7 +127,7 @@ public class PessoaService {
 
         if (pessoaFindCpf.isPresent()) {
             var custumerId = pessoaFindCpf.get().getCustomerId();
-            if (!custumerId.isEmpty()) {
+            if (custumerId != null && !custumerId.isEmpty()) {
                 var statusPagamento = pagamentoFeignClient.statusAssinatura(custumerId);
                 if (statusPagamento) {
                     throw new ExceptionCpf("Pessoa já cadastrado!");

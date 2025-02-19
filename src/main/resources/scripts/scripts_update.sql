@@ -1,3 +1,27 @@
+ALTER TABLE dietas_atualizadas MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE treino_atualizado MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE exercicio_em_casa MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE fit_dance MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE cha_desinchar MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE marmita_fit MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE detox MODIFY COLUMN foto LONGBLOB;
+
+ALTER TABLE cardapio_atualizados MODIFY COLUMN foto LONGBLOB;
+
+
+ALTER TABLE tb_calculo_tdee
+DROP PRIMARY KEY;
+
+ALTER TABLE tb_calculo_tdee
+    MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+
 ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_2;
 ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_4;
 ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_5;
@@ -97,7 +121,16 @@ ALTER TABLE cardapio_detalhado
     ADD COLUMN descricao_alimentacao_diaria TEXT;
 
 
-INSERT INTO `iouone_prd`.`tb_objetivo`
+INSERT INTO `tb_atividade_fisica`
+(`atividade_fisica`)
+VALUES
+    ('Nenhum'),
+    ('Baixo'),
+    ('Moderado'),
+    ('Frequente');
+
+
+INSERT INTO `tb_objetivo`
 (`id`, `objetivo`)
 VALUES
     (1, 'Emagrecer'),
@@ -106,7 +139,7 @@ VALUES
     (4, 'Ganhos secos'),
     (5, 'Ganhar agressivo');
 
-INSERT INTO `iouone_prd`.`alimentacoes_diarias`
+INSERT INTO `alimentacoes_diarias`
 (`id`, `alimentacao_diaria`)
 VALUES
     (1, 'Café da manhã'),
@@ -115,4 +148,3 @@ VALUES
     (4, 'Lanche da tarde'),
     (5, 'Jantar'),
     (6, 'Ceia');
-
