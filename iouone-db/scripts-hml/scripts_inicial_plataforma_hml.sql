@@ -1,8 +1,6 @@
-CREATE
-DATABASE IF NOT EXISTS iouone_hml;
+CREATE DATABASE IF NOT EXISTS iouone_hml;
 
-USE
-iouone_hml;
+USE iouone_hml;
 
 -- TABELA ATIVIDADE FISICA --
 CREATE TABLE tb_atividade_fisica
@@ -382,13 +380,13 @@ VALUES (2, 'Mesomorfo');
 INSERT INTO tb_biotipo (id, biotipo)
 VALUES (3, 'Endomorfo');
 
-INSERT INTO tb_objetivo
-    (id, objetivo)
-VALUES (1, 'Emagrecer'),
-       (2, 'Emagrecer agressivo'),
-       (3, 'Manter'),
-       (4, 'Ganhos secos'),
-       (5, 'Ganhar agressivo');
+INSERT INTO tb_objetivo (id, objetivo)
+VALUES (1, 'Perda de Peso');
+INSERT INTO tb_objetivo (id, objetivo)
+VALUES (2, 'Ganho de Massa Muscular');
+INSERT INTO tb_objetivo (id, objetivo)
+VALUES (3, 'Manutenção');
+
 
 
 ALTER TABLE dietas_atualizadas MODIFY COLUMN foto LONGBLOB;
@@ -409,8 +407,7 @@ ALTER TABLE cardapio_atualizados MODIFY COLUMN foto LONGBLOB;
 
 
 ALTER TABLE tb_calculo_tdee
-DROP
-PRIMARY KEY;
+DROP PRIMARY KEY;
 
 ALTER TABLE tb_calculo_tdee
     MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
@@ -422,14 +419,10 @@ ALTER TABLE dieta_detalhada DROP CONSTRAINT dieta_detalhada_ibfk_5;
 
 
 ALTER TABLE dieta_detalhada
-DROP
-COLUMN id_dia_semana,
-DROP
-COLUMN id_ingredientes,
-DROP
-COLUMN id_unidade_de_medida,
-DROP
-COLUMN quantidade;
+DROP COLUMN id_dia_semana,
+DROP COLUMN id_ingredientes,
+DROP COLUMN id_unidade_de_medida,
+DROP COLUMN quantidade;
 
 
 ALTER TABLE dieta_detalhada
