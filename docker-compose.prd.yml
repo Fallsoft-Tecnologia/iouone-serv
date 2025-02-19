@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   iouone_db:
     build:
@@ -14,8 +13,6 @@ services:
       - MYSQL_PASSWORD=iouone-db
     networks:
       - backend
-    volumes:
-      - iouone_db_data:/var/lib/mysql  # Volume persistente para o banco de dados
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: unless-stopped
 
@@ -44,12 +41,7 @@ services:
     networks:
       - backend
     restart: unless-stopped
-
 networks:
   backend:
     name: backend
     driver: "bridge"
-
-volumes:
-  iouone_db_data:
-    driver: local  # Garante que o volume não seja recriado
