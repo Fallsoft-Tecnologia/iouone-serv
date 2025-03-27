@@ -23,5 +23,14 @@ public class StringUtil {
         }
 
 
+
+    }
+
+    public static List<String> dividirStringReturnListVirgula(String input) {
+        if (input == null || input.isEmpty()) {
+            return List.of();
+        }
+        input = input.replaceAll("\n", "").trim();
+        return Arrays.asList(input.split(","));
     }
 }
