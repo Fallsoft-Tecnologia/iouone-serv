@@ -49,4 +49,17 @@ public class TreinoCompletoController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/especifico/{id}")
+    public ResponseEntity<?> getByTreinoCompletoId(@PathVariable Integer id) {
+
+        try {
+            var treinoCompleto = service.buscarTreinoCompleto(id);
+            return ResponseEntity.ok().body(treinoCompleto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
 }
