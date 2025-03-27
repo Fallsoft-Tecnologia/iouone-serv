@@ -15,26 +15,19 @@ public class TreinoCompleto {
     private TipoTreino tipoTreino;
 
     @ManyToOne
-    @JoinColumn(name = "id_exercicio")
-    private Exercicio exercicio;
-
-    @ManyToOne
-    @JoinColumn(name = "id_musculo")
-    private Musculo musculo;
-
-    @ManyToOne
     @JoinColumn(name = "id_treino_atualizado")
     private TreinoAtualizado treinoAtualizado;
+
+    private String treinos;
 
     public TreinoCompleto() {
     }
 
-    public TreinoCompleto(Integer id, TipoTreino tipoTreino, Exercicio exercicio, Musculo musculo, TreinoAtualizado treinoAtualizado) {
+    public TreinoCompleto(Integer id, TipoTreino tipoTreino, TreinoAtualizado treinoAtualizado, String treinos) {
         this.id = id;
         this.tipoTreino = tipoTreino;
-        this.exercicio = exercicio;
-        this.musculo = musculo;
         this.treinoAtualizado = treinoAtualizado;
+        this.treinos = treinos;
     }
 
     public Integer getId() {
@@ -53,21 +46,6 @@ public class TreinoCompleto {
         this.tipoTreino = tipoTreino;
     }
 
-    public Exercicio getExercicio() {
-        return exercicio;
-    }
-
-    public void setExercicio(Exercicio exercicio) {
-        this.exercicio = exercicio;
-    }
-
-    public Musculo getMusculo() {
-        return musculo;
-    }
-
-    public void setMusculo(Musculo musculo) {
-        this.musculo = musculo;
-    }
 
     public TreinoAtualizado getTreinoAtualizado() {
         return treinoAtualizado;
@@ -75,5 +53,13 @@ public class TreinoCompleto {
 
     public void setTreinoAtualizado(TreinoAtualizado treinoAtualizado) {
         this.treinoAtualizado = treinoAtualizado;
+    }
+
+    public String getTreinos() {
+        return treinos;
+    }
+
+    public void setTreinos(String treinos) {
+        this.treinos = treinos;
     }
 }

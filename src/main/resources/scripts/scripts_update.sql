@@ -148,3 +148,68 @@ VALUES
     (4, 'Lanche da tarde'),
     (5, 'Jantar'),
     (6, 'Ceia');
+
+
+ALTER TABLE treino_completo DROP CONSTRAINT treino_completo_ibfk_2;
+ALTER TABLE treino_completo DROP CONSTRAINT treino_completo_ibfk_3;
+
+ALTER TABLE treino_completo
+DROP COLUMN id_exercicio,
+DROP COLUMN id_musculo;
+
+ALTER TABLE treino_completo
+    ADD COLUMN treinos TEXT;
+
+
+INSERT INTO `iouone`.`tipo_treino`
+(`id`,
+ `tipo_treino`)
+VALUES
+    (1, 'Aquecimento'),
+    (2, 'Treino Principal'),
+    (3, 'Finalização');
+
+
+
+INSERT INTO `iouone`.`treino_completo`
+(`id`, `id_tipo_treino`, `id_treino_atualizado`, `treinos`)
+VALUES
+    (1, 1, 1, 'Polichinelos (2 min), Corrida estacionária (3 min), Skipping alto e deslocamento lateral (5 min)'),
+    (2, 2, 1, 'Burpees (3 x 15), Agachamento com salto (3 x 12), Kettlebell swing (3 x 15), Corrida de 40 metros (4 repetições), Prancha com toque no ombro (3 x 30 seg)'),
+    (3, 3, 1, 'Alongamento dinâmico e respiração profunda'),
+
+    (4, 1, 2, 'Mobilidade articular, Ativação muscular com resistência leve'),
+    (5, 2, 2, 'Agachamento livre (4 x 10), Supino reto (4 x 8), Levantamento terra (4 x 8), Desenvolvimento com halteres (3 x 12), Barra fixa (3 x 8)'),
+    (6, 3, 2, 'Alongamento para recuperação muscular'),
+
+    (7, 1, 3, 'Mobilidade ativa, Ativação com elástico'),
+    (8, 2, 3, 'Agachamento com carga máxima (5 x 5), Levantamento terra (5 x 5), Remada curvada (4 x 8), Sprint de 40m (4 repetições), Prancha isométrica (3 x 40 seg)'),
+    (9, 3, 3, 'Liberação miofascial e alongamento'),
+
+    (10, 1, 4, 'Mobilidade articular e ativação leve'),
+    (11, 2, 4, 'Circuito funcional: Agachamento, burpee, corrida estacionária (3 rodadas), Sprint 30m (4 repetições), Saltos pliométricos (3 x 12)'),
+    (12, 3, 4, 'Alongamento e técnicas de respiração profunda'),
+
+    (13, 1, 5, 'Polichinelos e corrida estacionária (5 min), Exercícios dinâmicos com resistência leve'),
+    (14, 2, 5, 'Circuito: Agachamento, flexão, barra fixa, remada, desenvolvimento (3 rodadas), Sprint 50m (4 repetições), Saltos em caixa (3 x 12), Medicine ball slam (3 x 15)'),
+    (15, 3, 5, 'Alongamento ativo'),
+
+    (16, 1, 6, 'Rolamento articular e exercícios de ativação leve'),
+    (17, 2, 6, 'Alongamentos dinâmicos para quadril, ombros e coluna, Exercícios de mobilidade como "world’s greatest stretch", Pistol squat assistido (3 x 8), Ponte de glúteo (3 x 12), Alongamento estático final'),
+    (18, 3, 6, 'Respiração profunda e relaxamento'),
+
+    (19, 1, 7, 'Corrida leve + movimentos dinâmicos'),
+    (20, 2, 7, 'Burpees, Agachamento com salto, Mountain climbers, Sprint de 20m, Prancha dinâmica'),
+    (21, 3, 7, 'Alongamento e liberação muscular'),
+
+    (22, 1, 8, 'Exercícios de ativação leve e mobilidade'),
+    (23, 2, 8, 'Ponte de glúteo (3 x 15), Agachamento sem carga (3 x 12), Exercícios com elástico (ombros e joelhos), Marcha estacionária controlada (3 x 30s)'),
+    (24, 3, 8, 'Alongamento e mobilização articular'),
+
+    (25, 1, 9, 'Mobilidade e ativação muscular'),
+    (26, 2, 9, 'Agachamento livre (4 x 12), Supino inclinado (4 x 10), Levantamento terra romeno (3 x 12), Remada curvada (3 x 10), Desenvolvimento com halteres (3 x 12)'),
+    (27, 3, 9, 'Alongamento e respiração'),
+
+    (28, 1, 10, 'Saltos laterais e corrida estacionária'),
+    (29, 2, 10, 'Circuito: 30s cada exercício, 10s descanso (3 rodadas) - Burpees, Agachamento, Flexão de braço, Corrida de 30m, Prancha dinâmica'),
+    (30, 3, 10, 'Alongamento e recuperação ativa');
