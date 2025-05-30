@@ -28,7 +28,7 @@ services:
     container_name: iouone-serv
     environment:
       spring.profiles.active: prd
-      SPRING_DATASOURCE_URL: jdbc:mysql://iouone_db:3306/iouone_prd?useTimezone=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://srv654370.hstgr.cloud:3306/iouone_prd?useTimezone=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: iouone
       SPRING_DATASOURCE_PASSWORD: iouone-db
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
