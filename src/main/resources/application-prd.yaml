@@ -12,7 +12,7 @@ spring:
         enabled: true
   datasource:
     username: ${SPRING_DATASOURCE_USERNAME:iouone}
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://srv654370.hstgr.cloud:3306/iouone_prd?useTimezone=true&serverTimezone=UTC}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://iouone_db:3306/iouone_prd?useTimezone=true&serverTimezone=UTC}
     password: ${SPRING_DATASOURCE_PASSWORD:iouone-db}
   jpa:
     properties:
